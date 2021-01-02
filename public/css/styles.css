@@ -1,0 +1,61 @@
+body {
+    background: #ffffff !important;
+}
+
+.form-control {
+    background: #fffcf4;
+}
+
+.header, .brand-logo {
+    background: #1c87de;
+}
+.brand-logo{
+        border:1px #fff solid;
+    border-right: none;
+}
+
+.header{
+    border-left: 1px #fff solid;
+    border-top: 1px #fff solid;
+}
+
+
+.deznav,.footer {
+    background:#1c87de !important;
+}
+
+a.ai-icon.mm-active {
+    background: #fefefe !important;
+}
+.deznav li a {
+    border-bottom: 1px #ffffff59 dashed;
+}
+
+.container-fluid, .content-body {
+    background: #f3f3f3;
+}
+
+.nav-header .brand-title {
+    margin-left: 10px;
+    max-width: 203px;
+    margin-top: 5px;
+    margin: auto;
+}
+
+/*===========================admisiones =================================*/
+
+
+.acciones .icono {
+    font-size: 26px;
+    background: #ff668229;
+    /* display: block; */
+    color: #fff;
+    border-radius: 25px;
+    width: 45px;
+    height: 45px;
+}
+.acciones a.active{
+    background: #ff6682;
+}
+
+/*=============================================================*/
