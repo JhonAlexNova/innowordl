@@ -8,7 +8,10 @@ use App\User;
 use App\TypeUser;
 use Session;
 use DB;
-USE App\Rol;
+use App\Rol;
+use App\AsignacionSeguimiento;
+use Auth;
+
 
 //use Illuminate\Http\Controllers\OrigenController;
 
@@ -41,10 +44,22 @@ class UsuarioController extends Controller
              $users = DB::table('users as u')
             ->join('type_user as tu','tu.id_user','=','u.id')
             ->join('rol as r','r.id','=','tu.id_rol')
+            //->join('asignacion_seguimiento as as','as.id_broker','=','u.id')
             ->where('tu.id_rol','=','6')
             ->where('u.estado','=','1')
+            ->select('*','u.id as id_','r.tipo as rol','u.created_at as fecha_registro','u.hora as hora_reg')->orderBy('U.id','DESC')->get();   
+        }else if(Session::get('id_rol')==3 || Session::get('id_rol')==4 || Session::get('id_rol')==5){//admisiones
+             $users = DB::table('users as u')
+            ->join('type_user as tu','tu.id_user','=','u.id')
+            ->join('rol as r','r.id','=','tu.id_rol')
+            ->join('asignacion_seguimiento as as','as.id_user','=','u.id')
+            ->where('tu.id_rol','=','6')
+            ->where('u.estado','=','1')
+            ->where('as.id_broker','=',Auth::user()->id)
             ->select('*','u.id as id_','r.tipo as rol','u.created_at as fecha_registro','u.hora as hora_reg')->orderBy('U.id','DESC')->get(); 
         }
+
+        //dd($users);
         return $users;
     }
 
@@ -72,6 +87,7 @@ class UsuarioController extends Controller
 
     public function create()
     {
+
         $fuentes = new OrigenController();
         $fuentes = $fuentes->index();
 
@@ -97,9 +113,10 @@ class UsuarioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-       // dd($request->all());
+    {  
          $hora = date("H:i:s");
+        
+        
 
         $usuario = new User();
         $usuario->id_origen = $request->id_origen;
@@ -122,11 +139,21 @@ class UsuarioController extends Controller
         $user_type->id_rol = $request->id_rol;
         $user_type->save();
 
+        //asignacion
+        if($request->id_broker){
+            $asignacion = new AsignacionSeguimiento();
+            $asignacion->id_user = $id_user;
+            $asignacion->id_broker = $request->id_broker;
+            $asignacion->hora = $hora;
+            $asignacion->save();   
+        }
+
+       
 
 
 
-        Session::flash('success','Registro creado correctamente.');
 
+        Session::flash('success','<b>Mensaje!</b> usuario creado correctamente');
         return redirect()->back();
     }
 
@@ -138,7 +165,7 @@ class UsuarioController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -149,7 +176,44 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
+
+        $app = new AppController();
+        $id = $app->decode64($id);
+
+        $user = DB::table('users as u')
+        ->join('type_user as tu','tu.id_user','=','u.id')
+        ->join('rol as r','r.id','=','tu.id_rol')
+        ->where('u.id','=',$id)
+        ->select('*','u.id as id_','r.tipo as rol','u.created_at as fecha_registro','u.hora as hora_reg')->get();
+        $user = $user[0];
         //
+        $departamento = new DepartamentoController();
+        $departamentos = $departamento->index();
+
+        $departamento_user = $departamento->get_departamento($user->id_ciudad);
+
+        $user->id_departamento = $departamento_user->id_departamento;
+
+        $ciudades = new CiudadController();
+
+        $ciudades = $ciudades->get_ciudades_dep($user->id_departamento);
+        
+
+        $tipos_documentos = new TipoDocumentoController();
+        $tipos_documentos = $tipos_documentos->index();
+        //
+        $users = new UsuarioController();
+        $users = $users->get_brokers();
+
+        //
+        $estadoCont = new EstadoController();
+        $estados = $estadoCont->get_estados();
+        //
+        $detallesAsgCont = new DetallesAsignacionController();
+        $detalles = $detallesAsgCont->detalles($user->id_user);
+
+
+        return view('app.asignacion.detalles',compact('user','departamentos','tipos_documentos','users','ciudades','estados','detalles'));
     }
 
     /**

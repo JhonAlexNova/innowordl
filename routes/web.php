@@ -20,21 +20,11 @@ Route::group(['prefix'=>'app'],function(){
     Route::get('/','AppController@index');
     Route::resource('/ciudad','CiudadController');
     Route::resource('/usuarios','UsuarioController');
-    //Route::post('/rol_active','AppController@rol_active');
+    Route::resource('/detalles_asignacion','DetallesAsignacionController');
 });
 
 
 
-
-
-
-
-Route::resource('producto','ProductoController');
-Route::resource('variacion','VariacionesController');
-
-Route::group(['prefix'=>'app','middleware'=>'cors'],function(){
-	Route::get('productos/{categoria}','ProductoController@get_list');
-});
 
 
 /*===========================================*/

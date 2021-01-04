@@ -19,6 +19,12 @@ class CiudadController extends Controller
         return $ciudades;
     }
 
+
+    public function get_ciudades_dep($id_departamento){
+        $ciudades = Ciudad::where('id_departamento','=',$id_departamento)->select('*')->get();
+        return $ciudades;
+    }
+
     /**
      * Show the form for creating a new resource.
      *

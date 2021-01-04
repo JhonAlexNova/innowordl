@@ -48,6 +48,7 @@
 		                            	<th>Rol</th>
 		                            	<th>Fecha registro</th>
 		                            	<th>Estado</th>
+		                            	<th></th>
 		                            	
 		                            </tr>
 		                        </thead>
@@ -70,8 +71,13 @@
 															REGISTRADO
 														</span>
 			                        				@endif
-												
 											</td>
+											<td>
+												<?php 
+													$id = base64_encode($value->id_user);
+												 ?>
+												 <a href="{{url('app/usuarios',$id)}}/edit" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+											</td>	
 											
 		                        		</tr>
 		                        	@endforeach                           
@@ -106,7 +112,10 @@
 								<b>Fecha registro:</b>: {{$value->fecha_registro}} - {{$value->hora_reg}} <br>
 							</p>
 							<div class="d-flex align-items-center mt-4">
-								<a href="javascript:void(0);" class="btn btn-primary light btn-rounded mr-auto">EDITAR</a>
+								<?php 
+									$id = base64_encode($value->id_user);
+								 ?>
+								<a href="{{url('app/usuarios',$id)}}/edit" class="btn btn-primary light btn-rounded mr-auto">EDITAR</a>
 								<span class="text-black font-w500">
 									@if($value->id_estado == 0)
 		                        					<span class="badge light badge-success">

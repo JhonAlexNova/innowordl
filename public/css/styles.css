@@ -41,6 +41,19 @@ a.ai-icon.mm-active {
     margin-top: 5px;
     margin: auto;
 }
+.alert-success {
+    background: #f0fff8;
+    border-color: #b7f6db;
+    color: #1BD084;
+}
+ul#menu .has-arrow {
+    font-size: 13px;
+    padding: 13px 0px 18px 24px;
+}
+#menu .has-link{
+    font-size: 13px;
+    padding: 13px 0px 18px 24px;
+}
 
 /*===========================admisiones =================================*/
 
