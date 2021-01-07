@@ -54,6 +54,22 @@ ul#menu .has-arrow {
     font-size: 13px;
     padding: 13px 0px 18px 24px;
 }
+.error{
+    font-size: 11px;
+}
+
+.bg-success {
+    background-color: #aef7d88f !important;
+    border-left: 3px #1ecc93 solid;
+}
+.bg-warning {
+    background-color: #ff9f5a47 !important;
+    border-left: 3px #fba052 solid;
+}
+.bg-danger {
+    background-color: #ff674652 !important;
+    border-left: 3px red solid;
+}
 
 /*===========================admisiones =================================*/
 

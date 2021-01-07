@@ -14,7 +14,7 @@
 	<div class="col-xl-12 col-md-12 col-lg-12"> 
         @if(Session::has('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-              {{ Session::get('success') }}
+              {!! Session::get('success') !!}
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -70,21 +70,12 @@
                                     <label>Correo</label>
                                     <input type="text" name="email" class="form-control" placeholder="Correo electronico" autocomplete="Correo electronico">
                                 </div>
-                                <div class="form-group col-md-3 id_dep">
-                                    <label>Departamento</label>
-                                    <select name="id_departamento"  class="form-control">
-                                        <option></option>
-                                        @foreach($departamentos as $key => $value)
-                                            <option value="{{$value->id}}"> {{$value->nombre}} </option>
-                                        @endforeach
-                                    </select>
+
+                                <div class="form-group col-md-3 direccion">
+                                    <label>Dirección</label>
+                                    <input type="text" name="direccion" class="form-control" placeholder="direccion">
                                 </div>
-                                <div class="form-group col-md-3 id_ciudad">
-                                    <label>Ciudad</label>
-                                    <select name="id_ciudad" class="form-control">
-                                        <option></option>
-                                    </select>
-                                </div>
+                                
                                 <div class="form-group col-md-3 id_tipo_doc">
                                     <label>Tipo documento</label>
                                     <select name="id_tipo_documento" class="form-control">

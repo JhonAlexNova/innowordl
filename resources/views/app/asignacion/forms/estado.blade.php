@@ -1,6 +1,14 @@
 <div class="pt-3">
     <div class="settings-form">
         <h4 class="text-primary">Estado</h4>
+        @if(Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              {!! Session::get('success') !!}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+        @endif
         <form action="{{route('detalles_asignacion.store')}}" method="post" class="register">
         @csrf 
         <div class="form-row">
@@ -11,7 +19,11 @@
                 <select name="id_estado"  class="form-control">
                     <option></option>
                     @foreach($estados as $key => $value)
-                        <option value="{{$value->id}}"> {{$value->tipo}} </option>  
+                        @if($value->id==$user->id_estado)
+                            <option value="{{$value->id}}" selected="on"> {{$value->tipo}}   </option>
+                        @else
+                            <option value="{{$value->id}}"> {{$value->tipo}}  </option>
+                        @endif
                     @endforeach
 
                     @if($user->id_estado==0)

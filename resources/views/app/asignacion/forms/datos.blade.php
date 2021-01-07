@@ -1,8 +1,33 @@
+ <div class="custom-tab-1">
+    <ul class="nav nav-tabs">
+
+        <li class="nav-item"><a href="#profile" data-toggle="tab" class="nav-link show active">Datos</a>
+        </li>
+        <li class="nav-item"><a href="#estado" data-toggle="tab" class="nav-link">Estado</a>
+        </li>
+         <li class="nav-item"><a href="#detalles" data-toggle="tab" class="nav-link">Historial de cambios</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="profile" class="tab-pane fade active show">
+            @include('app.asignacion.forms.datos')
+        </div>
+        <div id="estado" class="tab-pane fade">
+            @include('app.asignacion.forms.estado')
+        </div>
+        <div id="detalles" class="tab-pane fade">
+            @include('app.asignacion.forms.historial')
+        </div>
+    </div>
+</div>
+
+
 <div class="pt-3">
     <div class="settings-form">
         <h4 class="text-primary">Account Setting</h4>
-        <form action="{{route('usuarios.store')}}" method="post" class="register">
+        <form action="{{route('usuarios.update',$user->id_user)}}" method="post" class="register">
         @csrf 
+        @method('put')
         <div class="form-row">
             
             <div class="form-group col-md-3 nombres">
@@ -21,30 +46,10 @@
                 <label>Correo</label>
                 <input type="text" name="email" class="form-control" placeholder="Correo electronico" autocomplete="Correo electronico" value="{{$user->email}}">
             </div>
-            <div class="form-group col-md-3 id_dep">
-                <label>Departamento</label>
-                <select name="id_departamento"  class="form-control">
-                    <option></option>
-                    @foreach($departamentos as $key => $value)
-                        @if($user->id_departamento==$value->id)
-                            <option value="{{$value->id}}" selected="selected"> {{$value->nombre}} </option>
-                        @else
-                            <option value="{{$value->id}}"> {{$value->nombre}} </option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
+           
             <div class="form-group col-md-3 id_ciudad">
-                <label>Ciudad</label>
-                <select name="id_ciudad" class="form-control">
-                    @foreach($ciudades as $key => $value)
-                        @if($user->id_ciudad==$value->id)
-                            <option value="{{$value->id}}" selected="selected"> {{$value->nombre}} </option>
-                        @else
-                            <option value="{{$value->id}}"> {{$value->nombre}} </option>
-                        @endif
-                    @endforeach
-                </select>
+                <label>Dirección</label>
+                <input type="text" name="direccion" class="form-control" value="{{$user->direccion}}">
             </div>
             <div class="form-group col-md-3 id_tipo_doc">
                 <label>Tipo documento</label>
@@ -64,6 +69,11 @@
             <div class="form-group col-md-3 documento">
                 <label>Documento</label>
                 <input type="text" name="documento" class="form-control" placeholder="Ingresar numero documento" value="{{$user->documento}}">
+            </div>
+
+            <div class="form-group col-md-3 documento">
+                <label>Fecha de nacimiento</label>
+                <input type="date" name="fecha_nacimiento" class="form-control"  value="{{$user->fecha_nacimiento}}">
             </div>
 
             @if(Session::get('id_rol')==20)

@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Departamento;
-use DB;
 
-class DepartamentoController extends Controller
+class DetallesFacturaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,20 +13,7 @@ class DepartamentoController extends Controller
      */
     public function index()
     {
-        $departamentos = Departamento::get();
-        return $departamentos;
-    }
-
-
-    public function get_departamento($id_ciudad){
-        $departamento = DB::table('ciudades as c')
-        ->join('departamentos as d','d.id','=','c.id_departamento')
-        ->where('c.id','=',$id_ciudad)
-        ->select('*','c.id as id_ciudad','c.nombre as ciudad','d.id as id_departemento','d.nombre as departamento')->get();
-
-         //$departamento = $departamento[0];
-       
-        return $departamento;
+        //
     }
 
     /**

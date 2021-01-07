@@ -127,12 +127,16 @@
                         <ul aria-expanded="false" class="mm-collapse mm-show">
                             <li><a href="{{url('/app/usuarios/create')}}">Registro</a></li>
                             <li><a href="{{url('/app/usuarios/create?page=import')}}">Importar</a></li>
-                            <li><a href="{{url('/app/usuarios')}}">Nuevos clientes</a></li>
+                            <li><a href="{{url('/app/usuarios?page=nuevos_clientes&type=list')}}">Nuevos clientes</a></li>
+                            <li><a href="{{url('/app/usuarios?page=all&type=list')}}">Todos</a></li>
                         </ul>
                     </li>
 
-                    <li><a class="has-link" href="{{url('/app/registro/tareas_dia')}}"> <i class="fa fa-info"></i>TAREAS DEL DIA</a></li>
-                    <li><a class="has-link" href="{{url('/app/registro/tareas_vencidas')}}"> <i class="fa fa-info"></i>TAREAS VENCIDAS</a></li>
+                    <li><a class="has-link" href="{{url('/app/usuarios?page=tareas_dia&type=list')}}"> <i class="flaticon-381-networking"></i>TAREAS DEL DIA</a></li>
+                    <li><a class="has-link" href="{{url('/app/usuarios?page=tareas_vencidas&type=list')}}"> <i class="flaticon-381-networking"></i>TAREAS VENCIDAS</a></li>
+                    <li><a class="has-link" href="{{url('/app/usuarios?page=facturar&type=list')}}"> <i class="flaticon-381-networking"></i>FACTURAR</a></li>
+                    <li><a class="has-link" href="{{url('/app/registro/tareas_vencidas')}}"> <i class="flaticon-381-networking"></i>PENDIENTES POR PAGO</a></li>
+                    <li><a class="has-link" href="{{url('/app/registro/tareas_vencidas')}}"> <i class="flaticon-381-networking"></i>MATRICULADOS</a></li>
 
                     
                     <li class="mm-active" style="display: none;">

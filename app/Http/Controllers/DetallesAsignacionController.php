@@ -7,6 +7,7 @@ use DB;
 use App\DetallesAsignacion;
 use Auth;
 use Session;
+use App\User;
 
 class DetallesAsignacionController extends Controller
 {
@@ -37,10 +38,16 @@ class DetallesAsignacionController extends Controller
     	$detalles->hora_registro = $hora_registro;
     	$detalles->observacion = $request->observacion;
     	$detalles->save();
+
+        //update use
     	//dd($request->all());
 
-    	Session::flash('response','<b>Mensaje! </b>Registro creado correctamente.');
-    	//return redirect()->back();
+        $user = User::find($request->id_user);
+        $user->id_estado = $request->id_estado;
+        $user->save();
+
+    	Session::flash('success','<b>Mensaje! </b>Registro creado correctamente.');
+    	return redirect()->back();
     }
 
 
