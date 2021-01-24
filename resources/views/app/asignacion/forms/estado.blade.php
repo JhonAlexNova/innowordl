@@ -38,7 +38,7 @@
                     $hora_min = date('H');
 
                  ?>
-                <label>Fecha <?php echo $hora_min; ?> </label>
+                <label>Fecha  </label>
                 <input type="date" name="fecha" class="form-control" min="<?php echo $fecha_min; ?>">
             </div>
             <div class="form-group col-md-3 id_ciudad">

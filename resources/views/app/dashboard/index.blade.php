@@ -10,11 +10,22 @@
     </div>
 </div>
 
-<div class="row">
-	<div class="col-12">
-        <div class="card">
-            
-        </div>
+<section class="row card" id="menu-admin">
+    <div class="col-md-12">
+            <h1>WELCOME</h1>
+            <h4>No basta con querer: debes preguntarte a ti mismo qué vas a hacer para conseguir lo que quieres.
+<br><small><b>Franklin D. Roosevelt</b></small>
+</h4>
     </div>
-</div>
+    <div class="col-md-12">
+        <ul class="menu">
+            @foreach(Session::get('rols') as $rol)
+                     <li >
+                        <a href=""> {{$rol->tipo}} </a>
+                    </li>
+            @endforeach
+        </ul>   
+    </div>
+</section>
+
 @endsection

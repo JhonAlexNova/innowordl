@@ -16,6 +16,10 @@ class Factura extends Model
             'fecha_acuerdo',
             'hora_registro',
             'total',
-            'descuento'
+            'descuento',
+            'nombre_acudiente',
+            'documento_acudiente',
+            'correo_acudiente',
+            'telefono_acudiente'
     ];
 }

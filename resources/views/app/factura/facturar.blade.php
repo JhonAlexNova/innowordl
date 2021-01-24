@@ -18,6 +18,7 @@
 @if(!empty($_REQUEST['type']))
 	<?php
 		$hora = date('H:i');
+		$fecha = date('Y-m-d');
 	 ?>
 	@if($_REQUEST['type']=='list')
 		<section  class="row">
@@ -64,9 +65,9 @@
 		                        			<td> {{$value->email}} </td>
 		                        			<td> {{$value->hora_evento}} </td>
 		                        			<td>
-			                        				@if($hora > $value->hora_evento )<!-- la actividad esta vencida-->
-			                        					<span class="badge light badge-warning">
-															<i class="fa fa-circle text-warning mr-1"></i>
+ 			                        				@if($value->fecha_registro != $fecha )<!-- la actividad esta vencida-->
+			                        					<span class="badge light badge-danger">
+															<i class="fa fa-circle text-danger mr-1"></i>
 															{{$value->tipo}}
 														</span>
 													@else
@@ -80,8 +81,9 @@
 											<td>
 												<?php 
 													$id = base64_encode($value->id_user);
+													$id_det_asig = base64_encode($value->id_det_asig);
 												 ?>
-												 <a href="{{url('app/usuarios',$id)}}/edit?page=facturar" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+												 <a href="{{url('app/usuarios',$id)}}/edit?page=facturar&id_det_asig={{ $id_det_asig }}" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
 											</td>	
 											
 		                        		</tr>
@@ -124,9 +126,9 @@
 								<a href="{{url('app/usuarios',$id)}}/edit?page=facturar" class="btn btn-primary light btn-rounded mr-auto">EDITAR</a>
 								<span class="text-black font-w500">
 									
-            					@if($hora > $value->hora_evento )<!-- la actividad esta vencida-->
-                					<span class="badge light badge-warning">
-										<i class="fa fa-circle text-warning mr-1"></i>
+            					@if($value->fecha_registro != $fecha )<!-- la actividad esta vencida-->
+                					<span class="badge light badge-danger">
+										<i class="fa fa-circle text-danger mr-1"></i>
 										{{$value->tipo}}
 									</span>
 								@else

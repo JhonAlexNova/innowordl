@@ -8,5 +8,5 @@ class DetallesAsignacion extends Model
 {
     protected $table = 'detalles_asignacion';
 
-    protected $fillable = ['id_user','id_broker','id_estado','fecha','hora','hora_registro','observacion'];
+    protected $fillable = ['id_user','id_broker','id_estado','estado','fecha','hora','hora_registro','observacion'];
 }

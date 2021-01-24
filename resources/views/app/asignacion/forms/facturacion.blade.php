@@ -1,5 +1,5 @@
 <div class="modal-footer" style="padding-right: 0">
-	<a class="btn btn-outline-primary" data-toggle="modal" href='#modal-id' style="padding: 3px">Generar</a>
+	<a class="btn btn-outline-primary" onclick="init_pdf()" style="padding: 3px">Generar</a>
 </div>
 <div class="table-resonsive">
 	<table  class="table table-bordered" role="grid" aria-describedby="example_info" style="width: 100%">
@@ -59,26 +59,13 @@
 									<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
 								</div>
 								<div class="dropdown-menu dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-106px, -115px, 0px);">
-									<a class="dropdown-item" href="#">Descargar</a>
-									<a class="dropdown-item" href="#">Enviar correo</a>
+									<a class="dropdown-item" href="{{ url('app/factura',$value->id_factura) }}?page=generar_factura_pdf">Descargar</a>
+									<a class="dropdown-item" href="{{ url('app/factura',$value->id_factura) }}?page=enviar_mail">Enviar correo</a>
+									<a class="dropdown-item confirmar_pago" href="javascript:void(0);" id_factura="{{ $value->id_factura }}" page="confirmar_pago" id_user="{{ $value->id_user }}" >Confirmar pago</a>
 								</div>
-							</div>
+							</div> 
 						</td>
 
-					  <td style="display: none;"> 
-						  	<a href="">
-						  	<span class="badge light badge-success" style="display: block;width: 100%">
-								<i class="fa fa-circle text-success mr-1"></i>
-								
-							</span>
-						  </a><br>
-						  <a href="">
-						  	<span class="badge light badge-success" style="display: block;width: 100%">
-								<i class="fa fa-circle text-success mr-1"></i>
-								Enviar correo
-							</span>
-						  </a> 
-						</td>
 				</tr>
 			@endforeach
 		</tbody>
@@ -110,6 +97,29 @@
 						<input type="text" name="documento" disabled="on" value="{{ $user->documento }}" class="form-control"> 
 					</div>
 				</div>
+				
+				<div class="row" id="acudiente" style="display: none">
+					<div class="col-md-12">
+						<label>2. Acudiente</label>
+					</div>
+					
+					<div class="form-group col-md-3">
+						<label>Nombres</label>
+						<input type="text" name="nombres_acud"  placeholder="Nombres" class="form-control"> 
+					</div>
+					<div class="form-group col-md-3">
+						<label>Documento</label>
+						<input type="text" name="documento_acud"  placeholder="Documento" class="form-control"> 
+					</div>
+					<div class="form-group col-md-3">
+						<label>Correo</label>
+						<input type="text" name="correo_acud"  placeholder="Correo" class="form-control"> 
+					</div>
+					<div class="form-group col-md-3">
+						<label>Telefono</label>
+						<input type="text" name="telefono_acud"  placeholder="Telefono" class="form-control"> 
+					</div>
+				</div>
 				<br><br>
 				2. Detalles factura
 				<div class="modal-footer" style="padding-right: 0">
@@ -123,7 +133,6 @@
 								<td>Cantidad</td>
 								<td>Descripcion</td>
 								<td>Precio</td>
-								<td>Descuento</td>
 								<td>Acciones</td>
 							</tr>
 						</thead>
@@ -133,7 +142,6 @@
 								<td><input type="number" name="cantidad-0"  class="form-control"></td>
 								<td><input type="text"  name="descripcion-0" class="form-control"></td>
 								<td><input type="number" name="precio-0"  class="form-control"></td>
-								<td><input type="descuento" value="0" name="descuento-0"  class="form-control"></td>
 								<td><a href="">Eliminar</a></td>
 							</tr>
 						</tbody>
@@ -152,9 +160,48 @@
 	</div>
 </div>
 
+<!---modal-->
+<form method="post" name="form-confirm-pay">
+	<div class="modal fade" id="modal-confirm-pay">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					
+						<div class="row">
+							<input type="hidden" name="id_factura">
+							<input type="hidden" name="page">
+							<input type="hidden" name="id_user">
+							<div class="form-group col-md-6">
+								<label for="">Fecha</label>
+								<input type="date" name="fecha" class="form-control" required>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="">Hora</label>
+								<input type="time" name="hora" class="form-control" required>
+							</div>
+							<div class="form-group col-md-12">
+								<label for="">Observación</label>
+								<textarea name="observacion" rows="6" class="form-control"></textarea>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					<button type="submit" class="btn btn-outline-primary">Aceptar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
 <script>
 	var cont = 0;
 	var data = [];
+	var acudiente = {nom:'',doc:'',email:'',tel:''};
+	var link_confirm_pay = '';
+
+
 
 	function nuevo(send=null){
 		var cantidad = $(`input[name=cantidad-${cont}]`).val();
@@ -163,6 +210,12 @@
 		var descuento = $(`input[name=descuento-${cont}]`).val();
 		var id_user = $('input[name=id_user]').val();
 		var fecha_acuerdo = $('input[name=fecha_acuerdo]').val();
+
+		acudiente['nom'] = $('input[name=nombres_acud]').val();
+		acudiente['doc'] = $('input[name=documento_acud]').val();
+		acudiente['email'] = $('input[name=correo_acud]').val();
+		acudiente['tel'] = $('input[name=telefono_acud]').val();
+		//
 		if(!fecha_acuerdo){
 			$('.error-fecha').html('El campo es requerido.');
 			setTimeout(()=>{
@@ -177,11 +230,10 @@
 						<td><input type="number" name="cantidad-${cont}"  class="form-control"></td>
 						<td><input type="text"  name="descripcion-${cont}" class="form-control"></td>
 						<td><input type="number" name="precio-${cont}"  class="form-control"></td>
-						<td><input type="descuento" value="0" name="descuento-${cont}"  class="form-control"></td>
 						<td><a href="">Eliminar</a></td>
 					</tr>
 				 `;
-				 var obj = {id_user:id_user, fecha_acuerdo:fecha_acuerdo, cantidad:cantidad, descripcion:descripcion, precio:precio, descuento:descuento};
+				 var obj = {id_user:id_user, fecha_acuerdo:fecha_acuerdo, cantidad:cantidad, descripcion:descripcion, precio:precio, descuento:descuento, acudiente:acudiente};
 			 	 data.push(obj);
 			 	 if(!send){
 			 	 	$('.items-factura').append(form);
@@ -196,18 +248,61 @@
 	function generar(){
 		nuevo(true);
 		if(data.length>0){
+			 var url_string = window.location.href; // www.test.com?filename=test
+		    var url = new URL(url_string);
+		    var id_det_asig = url.searchParams.get("id_det_asig");
+
 			$('.btn-submit').attr('disabled',true);
 			$.ajax({
 				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-				url:'{{ route('factura.store') }}',
+				url:'{{ route('factura.store') }}?id_det_asig='+id_det_asig,
 				method:'post',
 				data:{data:data},
-				success:function(e){
+				success:function(r){
+					//console.log(r);
 					location.reload();
+				},error:function(e){
+					console.log(e);
 				}
 			})
 		}
+	}
+
+
+	function init_pdf(){
+		
+		var edad = document.getElementsByClassName('edad');
+		
+		if(edad.length>0){
+			edad = parseInt(edad[0].innerText);
+			if(!isNaN(edad)){				
+				if(edad<18){
+					$('#acudiente').show();
+				}
+				$('#modal-id').modal('show');
+			}
+		}else{
+			toastr.success('Aun faltan datos del usuario por actualizar.','Mensaje',{ timeOut: 5000 });
+		}
 
 		
+
 	}
+
+
+	$(document).on('click','.confirmar_pago',function(e){
+		$('input[name=id_factura]').val(e.target.attributes.id_factura.value);
+		$('input[name=id_user]').val(e.target.attributes.id_user.value);
+		$('input[name=page]').val(e.target.attributes.page.value);
+		$('#modal-confirm-pay').modal('show');	
+	});
+
+	$(document).on('submit','form[name=form-confirm-pay]',function(e){
+		e.preventDefault();
+		var form = $(this).serialize();
+		var id_factura = $('input[name=id_factura]').val();
+		var path = "{{ url('app/factura') }}/"+id_factura+'?'+form;
+		location.href = path;
+	});
+
 </script>

@@ -19,6 +19,7 @@
     <link href="{{ asset('template/css/style.css')}}" rel="stylesheet">
     <link href="{{ asset('template/cdn.lineicons.com/2.0/LineIcons.css')}}" rel="stylesheet">
     <link href="{{ asset('template/vendor/owl-carousel/owl.carousel.css')}}" rel="stylesheet">
+    <link href="{{ asset('lib/toastr/build/toastr.min.css')}}" rel="stylesheet">
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet">
 
 
@@ -27,10 +28,6 @@
 
 </head>
 <body>
-    
-    <!--*******************
-        Preloader start
-    ********************-->
     <div id="preloader">
         <div class="sk-three-bounce">
             <div class="sk-child sk-bounce1"></div>
@@ -38,13 +35,6 @@
             <div class="sk-child sk-bounce3"></div>
         </div>
     </div>
-    <!--*******************
-        Preloader end
-    ********************-->
-
-    <!--**********************************
-        Main wrapper start
-    ***********************************-->
     <div id="main-wrapper">
 
         <!--**********************************
@@ -54,11 +44,11 @@
             <a href="javascript:void(0);" class="brand-logo">
                 <img class="brand-title" src="{{url('/')}}/img/logo_blanco.png" alt="">
             </a>
-            <div class="nav-control">
-                <div class="hamburger">
-                    <span class="line"></span><span class="line"></span><span class="line"></span>
-                </div>
-            </div>
+            <span class="perfil">
+                   <i class=" fa fa-user"></i> {{ Auth::user()->nombres }}<br>{{ Auth::user()->apellidos }}
+
+                </span>
+            
         </div>
 
 
@@ -71,9 +61,6 @@
                         <div class="header-left">
                             <div class="dashboard_bar">
                                 <div class="rols">
-                                    <form action="">
-                                        
-                                    </form>
                                     <select>
                                         @foreach(Session::get('rols') as $rol)
                                            <option value=""> {{$rol->tipo}} </option>
@@ -86,7 +73,7 @@
                         <ul class="navbar-nav header-right">
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
-                                    <img src="{{url('')}}/template/images/profile/17.jpg" width="20" alt=""/>
+                                    <img src="{{ url('img/avatar',Auth::user()->avatar) }}" width="20" alt=""/>
                                     <div class="header-info">
                                         <span class="text-black"> {{Auth::user()->nombres}} </span>
                                         <p class="fs-12 mb-0">{{Auth::user()->apellidos}}</p>
@@ -102,7 +89,7 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                       @csrf
                                       </form> 
-                                </div>
+                                </div> 
                             </li>
                         </ul>
                     </div>
@@ -118,40 +105,59 @@
         ***********************************-->
         <div class="deznav">
             <div class="deznav-scroll">
-                <ul class="metismenu" id="menu">
-                    <li class="mm-active">
-                        <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                            <i class="flaticon-381-networking"></i>
-                            <span class="nav-text">Usuarios </span>
-                        </a>
-                        <ul aria-expanded="false" class="mm-collapse mm-show">
-                            <li><a href="{{url('/app/usuarios/create')}}">Registro</a></li>
-                            <li><a href="{{url('/app/usuarios/create?page=import')}}">Importar</a></li>
-                            <li><a href="{{url('/app/usuarios?page=nuevos_clientes&type=list')}}">Nuevos clientes</a></li>
-                            <li><a href="{{url('/app/usuarios?page=all&type=list')}}">Todos</a></li>
-                        </ul>
-                    </li>
+                @if(Session::get('id_rol') == 2 || Session::get('id_rol') == 3)
+                    <ul class="metismenu" id="menu">
+                        <li>
+                            <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                                <i class="fa fa-users"></i>
+                                <span class="nav-text">Usuarios </span>
+                            </a>
+                            <ul aria-expanded="false" class="mm-collapse">
+                                <li><a href="{{url('/app/usuarios/create')}}">Registro</a></li>
+                                <li><a href="{{url('/app/usuarios/create?page=import')}}">Importar</a></li>
+                                <li><a href="{{url('/app/usuarios?page=nuevos_clientes&type=list')}}">Nuevos clientes</a></li>
+                                @if(Session::get('id_rol')== 1 || Session::get('id_rol') == 2)
+                                    <li><a href="{{url('/app/usuarios?page=all&type=list')}}">Todos</a></li>
+                                @endif
+                            </ul>
+                        </li>
 
-                    <li><a class="has-link" href="{{url('/app/usuarios?page=tareas_dia&type=list')}}"> <i class="flaticon-381-networking"></i>TAREAS DEL DIA</a></li>
-                    <li><a class="has-link" href="{{url('/app/usuarios?page=tareas_vencidas&type=list')}}"> <i class="flaticon-381-networking"></i>TAREAS VENCIDAS</a></li>
-                    <li><a class="has-link" href="{{url('/app/usuarios?page=facturar&type=list')}}"> <i class="flaticon-381-networking"></i>FACTURAR</a></li>
-                    <li><a class="has-link" href="{{url('/app/registro/tareas_vencidas')}}"> <i class="flaticon-381-networking"></i>PENDIENTES POR PAGO</a></li>
-                    <li><a class="has-link" href="{{url('/app/registro/tareas_vencidas')}}"> <i class="flaticon-381-networking"></i>MATRICULADOS</a></li>
+                        <li><a class="has-link" href="{{url('/app/usuarios?page=tareas_dia&type=list')}}"> <i class="flaticon-381-networking"></i>TAREAS DEL DIA</a></li>
+                        <li><a class="has-link" href="{{url('/app/usuarios?page=tareas_vencidas&type=list')}}"> <i class="flaticon-381-networking"></i>TAREAS VENCIDAS</a></li>
+                        <li><a class="has-link" href="{{url('/app/usuarios?page=facturar&type=list')}}"> <i class="flaticon-381-networking"></i>FACTURAR</a></li>
+                        <li><a class="has-link" href="{{url('/app/usuarios?page=facturacion_pendiente_pago&type=list')}}"> <i class="flaticon-381-networking"></i>PENDIENTES POR PAGO</a></li>
+                        <li><a class="has-link" href="{{url('/app/usuarios?page=facturacion_pendiente_pago&type=list')}}"> <i class="flaticon-381-networking"></i>MATRICULADOS</a></li>
 
-                    
-                    <li class="mm-active" style="display: none;">
-                        <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                            <i class="flaticon-381-networking"></i>
-                            <span class="nav-text">Configuraciones </span>
-                        </a>
-                        <ul aria-expanded="false" class="mm-collapse mm-show">
-                            <li><a href="{{url('/app/usuarios')}}">Todos los usuarios</a></li>
-                            <li><a href="{{url('/app/usuarios/create')}}">Registro</a></li>
-                            <li><a href="{{url('/app/usuarios/importar')}}">Importar</a></li>
-                        </ul>
-                    </li>
+                        
+                        <li class="mm-active" style="display: none;">
+                            <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                                <i class="flaticon-381-networking"></i>
+                                <span class="nav-text">Configuraciones </span>
+                            </a>
+                            <ul aria-expanded="false" class="mm-collapse mm-show">
+                                <li><a href="{{url('/app/usuarios')}}">Todos los usuarios</a></li>
+                                <li><a href="{{url('/app/usuarios/create')}}">Registro</a></li>
+                                <li><a href="{{url('/app/usuarios/importar')}}">Importar</a></li>
+                            </ul>
+                        </li>
 
+                    </ul>
+
+                @endif
+
+                <div class="copyright">
+                    <p><strong>Configuración</strong> </p>
+                    <p></p>
+                </div>
+
+                <ul class="metismenu" id="submenu" style="margin-top: -40px">
+                    @if(Session::get('id_rol')==2)
+                         <li><a class="has-link" href="{{url('/app/usuarios?page=tareas_dia&type=list')}}"> <i class="flaticon-381-networking"></i>Permisos</a></li>
+                    @endif
+                    <li><a class="has-link" href="{{url('/app/usuarios?page=tareas_dia&type=list')}}"> <i class="flaticon-381-networking"></i>Mis datos</a></li>
                 </ul>
+
+
                 
                 
             </div>
@@ -223,6 +229,8 @@
     <!-- Datatable -->
     <script src="{{ asset('template/vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('template/js/plugins-init/datatables.init.js')}}"></script>
+
+    <script src="{{ asset('lib/toastr/build/toastr.min.js')}}"></script>
     
     <script>
         function carouselReview(){
@@ -289,9 +297,9 @@
                 carouselReview();
             }, 1000); 
             $('#example2').DataTable();
+           
         });
 
-        
     </script>
 </body>
 

@@ -13,7 +13,6 @@
 
 
 
-
 <div class="row">
     <div class="col-xl-3">
         <div class="card">
@@ -51,9 +50,12 @@
                     @endif
                     <p><b>Edad</b>:
                          <?php 
-                            if($user->fecha_nacimiento){
-                                echo calculaedad ($user->fecha_nacimiento).' Años';
-                            }else{
+                            if($user->fecha_nacimiento){  ?>
+                                <span class="edad"> 
+                                    <?php 
+                                       echo calculaedad($user->fecha_nacimiento);?>
+                                 </span>Años
+                            <?php } else{
                                 echo "Sin registro";
                             }
                          ?>
@@ -74,6 +76,7 @@
                 <div class="profile-tab">
                     @if(!empty($_REQUEST['page']))
                      <div class="custom-tab-1">
+
                             @if($_REQUEST['page']=='nuevos_clientes' || $_REQUEST['page']=='all' || $_REQUEST['page']=='tareas_dia' || $_REQUEST['page']=='tareas_vencidas')
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item"><a href="#profile" data-toggle="tab" class="nav-link show active">Datos</a></li>
@@ -81,8 +84,9 @@
                                          <li class="nav-item"><a href="#detalles" data-toggle="tab" class="nav-link">Historial de cambios</a></li>
                                     </ul>
                                     <div class="tab-content">
+
                                         <div id="profile" class="tab-pane fade show active">
-                                            @include('app.asignacion.forms.datos')
+                                            @include('app.asignacion.forms.datos')  
                                         </div>
                                         <div id="estado" class="tab-pane fade">
                                             @include('app.asignacion.forms.estado')
@@ -91,19 +95,21 @@
                                             @include('app.asignacion.forms.historial')
                                         </div>
                                     </div>
+
+
                                                             
                             @elseif($_REQUEST['page']=='facturar')
                                 <ul class="nav nav-tabs">
                                         <li class="nav-item"><a href="#factura" data-toggle="tab" class="nav-link show active">Facturas</a></li>
                                         <li class="nav-item"><a href="#profile" data-toggle="tab" class="nav-link">Datos</a></li>
-                                         <li class="nav-item"><a href="#detalles" data-toggle="tab" class="nav-link">Historial de cambios</a></li>
+                                        <li class="nav-item"><a href="#detalles" data-toggle="tab" class="nav-link">Historial de cambios</a></li>
                                     </ul>
                                     <div class="tab-content">
                                         <div id="factura" class="tab-pane fade show active">
                                             @include('app.asignacion.forms.facturacion')
                                         </div>
                                         <div id="profile" class="tab-pane fade">
-                                            @include('app.asignacion.forms.estado')
+                                           @include('app.asignacion.forms.datos')  
                                         </div>
                                         <div id="detalles" class="tab-pane fade">
                                             @include('app.asignacion.forms.historial')
@@ -135,4 +141,12 @@
     </div>
 </div>
 <script src="{{asset('js/controller/CiudadController.js')}}"></script>
+
+<script>
+    var url_string = window.location.href; // www.test.com?filename=test
+    var url = new URL(url_string);
+    var paramValue = url.searchParams.get("page");
+    var id_det_asig = url.searchParams.get("id_det_asig");
+    
+</script>
 @endsection

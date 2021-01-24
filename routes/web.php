@@ -13,6 +13,9 @@
 Route::get('/',function(){
 	return redirect('login');
 });
+Route::get('/pdf',function(){
+	return view('pdf.factura');
+});
 Auth::routes();
 
 
@@ -21,7 +24,8 @@ Route::group(['prefix'=>'app'],function(){
     Route::resource('/ciudad','CiudadController');
     Route::resource('/usuarios','UsuarioController');
     Route::resource('/detalles_asignacion','DetallesAsignacionController');
-    Route::resource('factura','FacturaController');
+    Route::resource('/factura','FacturaController');
+    Route::resource('/permiso','PermisoController');
 });
 
 

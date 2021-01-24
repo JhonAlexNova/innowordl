@@ -1,30 +1,6 @@
- <div class="custom-tab-1">
-    <ul class="nav nav-tabs">
-
-        <li class="nav-item"><a href="#profile" data-toggle="tab" class="nav-link show active">Datos</a>
-        </li>
-        <li class="nav-item"><a href="#estado" data-toggle="tab" class="nav-link">Estado</a>
-        </li>
-         <li class="nav-item"><a href="#detalles" data-toggle="tab" class="nav-link">Historial de cambios</a>
-        </li>
-    </ul>
-    <div class="tab-content">
-        <div id="profile" class="tab-pane fade active show">
-            @include('app.asignacion.forms.datos')
-        </div>
-        <div id="estado" class="tab-pane fade">
-            @include('app.asignacion.forms.estado')
-        </div>
-        <div id="detalles" class="tab-pane fade">
-            @include('app.asignacion.forms.historial')
-        </div>
-    </div>
-</div>
-
-
 <div class="pt-3">
     <div class="settings-form">
-        <h4 class="text-primary">Account Setting</h4>
+        <h4 class="text-primary">Datos personales</h4>
         <form action="{{route('usuarios.update',$user->id_user)}}" method="post" class="register">
         @csrf 
         @method('put')

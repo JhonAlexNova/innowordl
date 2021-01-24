@@ -6,17 +6,51 @@ body {
     background: #fffcf4;
 }
 
-.header, .brand-logo {
-    background: #1c87de;
-}
-.brand-logo{
-        border:1px #fff solid;
+
+.brand-logo {
     border-right: none;
 }
 
-.header{
-    border-left: 1px #fff solid;
-    border-top: 1px #fff solid;
+.header, .brand-logo,span.perfil {
+    background: #1c87de;
+}
+ul#menu {
+    margin: 135px 0 0 0;
+}
+#menu li {
+    padding-left: 0;
+}
+li.mm-active {
+    border-left: 8px #1c87de solid;
+}
+li.mm-active.active-no-child {
+    border-left: 6px #ff6682 solid !important;
+}
+#menu li a i {
+    color: #fff;
+}
+li.mm-active.active-no-child i {
+    color: #1c87de !important;
+}
+th.sorting {
+    color: #ff6682 !important;
+}
+.btn-primary {
+    color: #1673bf;
+    background-color: #1c87de5c;
+    border-color: #3084c7;
+}
+
+#menu li a{
+    border-radius: 0
+}
+
+span.perfil {
+    display: block;
+    text-align: center;
+    color: #fff;
+    padding: 0px 0 40px 0;
+    
 }
 
 
@@ -28,7 +62,7 @@ a.ai-icon.mm-active {
     background: #fefefe !important;
 }
 .deznav li a {
-    border-bottom: 1px #ffffff59 dashed;
+    border-bottom: 1px #ffffff45 solid;
 }
 
 .container-fluid, .content-body {
@@ -71,6 +105,20 @@ ul#menu .has-arrow {
     border-left: 3px red solid;
 }
 
+/*==============================toastr============================*/
+.toast {
+    opacity: 1 !important;
+}
+.toast-success {
+    background-color: #abeca6;
+    border: 1px #16da34 solid;
+    border-left: 5px #27d03c solid;
+}
+.toast-success .toast-title, .toast-success .toast-message {
+    color: green;
+}
+
+
 /*===========================admisiones =================================*/
 
 
@@ -88,3 +136,30 @@ ul#menu .has-arrow {
 }
 
 /*=============================================================*/
+ul.menu {
+    display: flex;
+    justify-content: center;
+}
+ul.menu li {
+    background: #ec3469;
+    margin: 10px;
+    color: #fff;
+}
+ul.menu li a {
+    color: #fff;
+    padding: 18px 15px;
+    display: block;
+    border: 1px #1c87de dashed;
+}
+#menu-admin h1 {
+    text-align: center;
+    font-family: fantasy;
+    margin: 43px 0 25px 0;
+}
+#menu-admin h4{
+    text-align: center;
+}
+
+ul#submenu li {
+    padding: 0;
+}

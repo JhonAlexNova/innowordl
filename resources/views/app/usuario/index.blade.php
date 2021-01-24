@@ -15,6 +15,8 @@
 		@include('app.tareas.tareas_vencidas')
 	@elseif($_REQUEST['page']=='facturar')
 		@include('app.factura.facturar')
+	@elseif($_REQUEST['page']=='facturacion_pendiente_pago')
+		@include('app.factura.pendientes_pago')
 	@endif
 @endif
 

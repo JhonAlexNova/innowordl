@@ -71,7 +71,7 @@
 												<?php 
 													$id = base64_encode($value->id_user);
 												 ?>
-												 <a href="{{url('app/usuarios',$id)}}/edit?tareas_vencidas" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+												 <a href="{{url('app/usuarios',$id)}}/edit?page=tareas_vencidas" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
 											</td>	
 											
 		                        		</tr>
