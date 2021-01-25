@@ -1,5 +1,13 @@
 <div class="pt-3">
     <div class="settings-form">
+         @if(Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              {!! Session::get('success') !!}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+        @endif
         <h4 class="text-primary">Datos personales</h4>
         <form action="{{route('usuarios.update',$user->id_user)}}" method="post" class="register">
         @csrf 
@@ -52,16 +60,29 @@
                 <input type="date" name="fecha_nacimiento" class="form-control"  value="{{$user->fecha_nacimiento}}">
             </div>
 
-            @if(Session::get('id_rol')==20)
-                <div class="form-group col-md-3 asignacion">
-                    <label>Broker asignado</label>
-                    <select name="id_broker" class="form-control">
-                        <option></option>
-                        @foreach($users as $key => $value)
-                            <option value="{{$value->id_}}"> {{$value->nombres}} {{$value->apellidos}} </option>
-                        @endforeach
-                    </select>
-                </div> 
+
+            @if($_REQUEST['page']=='matriculados')
+                @if(Session::get('id_rol')==2)
+                     <div class="form-group col-md-3 asignacion">
+                        <input type="hidden"  name="page" value="{{ $_REQUEST['page'] }}">
+                         <input type="hidden"  name="id_matricula" value="{{ $matricula->id }}">
+                        <label>Broker asignado</label>
+                        <select name="id_broker" class="form-control">
+                            <option></option>
+
+
+                            @foreach($users as $key => $value)
+                                @if($matricula->id_broker==$value->id_)
+                                    <option value="{{$value->id_}}" selected="selected"> {{$value->nombres}} {{$value->apellidos}} </option>
+                                @else
+                                    <option value="{{$value->id_}}"> {{$value->nombres}} {{$value->apellidos}} </option>
+                                @endif
+                                
+                            @endforeach
+                        </select>
+                    </div> 
+                @endif
+                   
             @endif
 
                  
@@ -69,7 +90,7 @@
 
         </div>
         <div class="modal-footer"></div>
-        <button type="submit" class="btn btn-outline-primary">REGISTRAR</button>
+        <button type="submit" class="btn btn-outline-primary">Actualizar</button>
     </form>
     </div>
 </div>

@@ -163,3 +163,9 @@ ul.menu li a {
 ul#submenu li {
     padding: 0;
 }
+
+li.nav-item a {
+    color: #ed0b4c !important;
+    font-family: 'Roboto';
+    font-weight: bold;
+}

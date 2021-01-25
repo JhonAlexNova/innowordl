@@ -36,9 +36,6 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-block btn-outline-primary">ACCEDER</button>
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-block btn-outline-success">RECUPERAR ACCESO</button>
-            </div>
         </form>
     </div>
 </section>  

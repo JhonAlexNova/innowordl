@@ -13,13 +13,15 @@
 Route::get('/',function(){
 	return redirect('login');
 });
+Route::view('/inactivo','auth.inactivo');
+
 Route::get('/pdf',function(){
 	return view('pdf.factura');
 });
 Auth::routes();
 
 
-Route::group(['prefix'=>'app'],function(){
+Route::group(['prefix'=>'app', 'middleware'=>['auth','status']],function(){
     Route::get('/','AppController@index');
     Route::resource('/ciudad','CiudadController');
     Route::resource('/usuarios','UsuarioController');

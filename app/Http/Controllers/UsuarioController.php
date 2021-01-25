@@ -13,6 +13,7 @@ use App\AsignacionSeguimiento;
 use Auth;
 use App\Imports\UsersImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Matricula;
 
 
 //use Illuminate\Http\Controllers\OrigenController;
@@ -36,18 +37,11 @@ class UsuarioController extends Controller
        if(!empty($_REQUEST['page'])){
             $this->page = $_REQUEST['page'];
        }
-       $rol = $this->set_rol_session();
+
     }
 
 
-    public function set_rol_session(){
-       if(!empty(Auth::user()->id)){
-            if(!empty(Session::get('id_rol'))){
-                Session::put('id_rol',Session::get('id_rol'));
-                $this->id_rol = Session::get('id_rol');
-            }
-       }
-    }
+
 
 
     public function get_rols(){
@@ -55,9 +49,17 @@ class UsuarioController extends Controller
         return $rols;
     }
 
+    public function get_user_rols(){
+            $users_rols = DB::table('rol as r')
+            ->join('type_user as tu','tu.id_rol','r.id')
+            ->where('tu.id_rol','!=','6')
+            ->select('*')->get();
+            return $users_rols;
+    }
+
 
     public function get_nuevos_clientes(){
-        if($this->id_rol==2){//administrador
+        if(Session::get('id_rol')== 2){//administrador
              $users = DB::table('users as u')
             ->join('type_user as tu','tu.id_user','=','u.id')
             ->join('rol as r','r.id','=','tu.id_rol')
@@ -67,7 +69,7 @@ class UsuarioController extends Controller
             ->select('*','u.id as id_','r.tipo as rol','u.created_at as fecha_registro','u.hora as hora_reg')->orderBy('U.id','DESC')->get();
            
 
-        }else if($this->id_rol==3 || $this->id_rol==4 || $this->id_rol==5){//admisiones
+        }else if(Session::get('id_rol')== 3 || Session::get('id_rol')== 4 || Session::get('id_rol')== 5){//admisiones
              $users = DB::table('users as u')
             ->join('type_user as tu','tu.id_user','=','u.id')
             ->join('rol as r','r.id','=','tu.id_rol')
@@ -88,7 +90,8 @@ class UsuarioController extends Controller
         ->join('rol as r','r.id','=','tu.id_rol')
         ->where('tu.id_rol','!=','6')
         ->where('tu.id_rol','!=','1')
-        ->select('*','u.id as id_','r.tipo as rol','u.created_at as fecha_registro','u.hora as hora_reg')->orderBy('U.id','DESC')->get();
+        ->select('*','u.id as id_','r.tipo as rol','u.created_at as fecha_registro','u.hora as hora_reg')->groupBy('u.id')->orderBy('U.id','DESC')->get();
+//        dd($users);
 
         return $users;
     }
@@ -112,7 +115,7 @@ class UsuarioController extends Controller
     public function get_tareas_dia(){
         //broker
         $fecha = date('Y-m-d');
-            if($this->id_rol==1 || $this->id_rol==2){
+            if(Session::get('id_rol')== 1 || Session::get('id_rol')== 2){
                 $users = DB::table('users as u')
                 ->join('type_user as tu','tu.id_user','=','u.id')
                 ->join('rol as r','r.id','=','tu.id_rol')
@@ -123,7 +126,7 @@ class UsuarioController extends Controller
                 ->where('u.id_estado','=','1')
                 ->where('da.fecha','=',$fecha)
                 ->select('*','u.id as id_','r.tipo as rol','u.created_at as fecha_registro','u.hora as hora_reg','da.fecha as fecha_evento','da.hora as hora_evento')->get();
-            }else if($this->id_rol==3 || $this->id_rol==4 || $this->id_rol==5){ //brokers
+            }else if(Session::get('id_rol')== 3 || Session::get('id_rol')== 4 || Session::get('id_rol')== 5){ //brokers
                 $users = DB::table('users as u')
                 ->join('type_user as tu','tu.id_user','=','u.id')
                 ->join('rol as r','r.id','=','tu.id_rol')
@@ -146,7 +149,7 @@ class UsuarioController extends Controller
     public function get_tareas_vencidas(){
         //broker
             $fecha_actual = date('Y-m-d');
-             if($this->id_rol==1 || $this->id_rol==2){
+             if(Session::get('id_rol')== 1 || Session::get('id_rol')== 2){
                  $users = DB::table('users as u')
                 ->join('type_user as tu','tu.id_user','=','u.id')
                 ->join('rol as r','r.id','=','tu.id_rol')
@@ -157,7 +160,7 @@ class UsuarioController extends Controller
                 ->where('u.id_estado','=','1')
                 ->where('da.fecha','<',$fecha_actual)
                 ->select('*','u.id as id_','r.tipo as rol','u.created_at as fecha_registro','u.hora as hora_reg','da.fecha as fecha_evento','da.hora as hora_evento')->get();
-             }else if($this->id_rol==3 || $this->id_rol==4 || $this->id_rol==5){
+             }else if(Session::get('id_rol')== 3 || Session::get('id_rol')== 4 || Session::get('id_rol')== 5){
                 $users = DB::table('users as u')
                 ->join('type_user as tu','tu.id_user','=','u.id')
                 ->join('rol as r','r.id','=','tu.id_rol')
@@ -178,7 +181,7 @@ class UsuarioController extends Controller
     }
 
     public function get_pendientes_facturacion(){//falta filtrar
-        if($this->id_rol==1 || $this->id_rol==2){
+        if(Session::get('id_rol')== 1 || Session::get('id_rol')== 2){
             $fecha_actual = date('Y-m-d');
             $users = DB::table('users as u')
             ->join('type_user as tu','tu.id_user','=','u.id')
@@ -190,7 +193,7 @@ class UsuarioController extends Controller
             ->where('u.id_estado','=','4')->where('da.id_estado','=','4')->where('da.estado','=','1')
             ->select('*','da.id as id_det_asig','u.id as id_','r.tipo as rol','u.created_at as fecha_registro','u.hora as hora_reg','da.fecha as fecha_evento','da.hora as hora_evento')->get();
 
-        }else if($this->id_rol==3){
+        }else if(Session::get('id_rol')== 3){
             $users = DB::table('users as u')
             ->join('detalles_asignacion as da','da.id_user','=','u.id')
             ->join('estados as e','e.id','=','u.id_estado')
@@ -206,7 +209,7 @@ class UsuarioController extends Controller
 
     public function facturacion_pendiente_pago(){
         $fecha_actual = date('Y-m-d');
-        if($this->id_rol==1 || $this->id_rol==2){
+        if(Session::get('id_rol')== 1 || Session::get('id_rol')== 2){
             $users = DB::table('users as u')
             ->join('type_user as tu','tu.id_user','=','u.id')
             ->join('rol as r','r.id','=','tu.id_rol')
@@ -217,7 +220,7 @@ class UsuarioController extends Controller
             ->where('u.id_estado','=','4')->where('da.id_estado','=','4')
             ->select('*','da.id as id_det_asig','u.id as id_','r.tipo as rol','u.created_at as fecha_registro','u.hora as hora_reg','da.fecha as fecha_evento','da.hora as hora_evento')->get();
 
-        }else if($this->id_rol==3){
+        }else if(Session::get('id_rol')== 3){
            $users = DB::table('users as u')
             ->join('type_user as tu','tu.id_user','=','u.id')
             ->join('rol as r','r.id','=','tu.id_rol')
@@ -235,6 +238,21 @@ class UsuarioController extends Controller
     }
 
 
+    public function matriculados(){
+         $users = DB::table('users as u')
+        ->join('type_user as tu','tu.id_user','=','u.id')
+        ->join('rol as r','r.id','=','tu.id_rol')
+        ->join('asignacion_seguimiento as as','as.id_user','=','u.id')
+        ->join('detalles_asignacion as da','da.id_user','=','u.id')
+        ->join('matriculas as m','m.id_user','=','u.id')
+
+        ->where('u.id_estado','=','6')->where('da.id_estado','=','6')
+        ->select('*','da.id as id_det_asig','u.id as id_','r.tipo as rol','m.created_at as fecha_matricula','u.hora as hora_reg','da.fecha as fecha_evento','da.hora as hora_evento')->get();
+
+        return $users;
+    }
+
+
 
 
     public function index()
@@ -243,7 +261,7 @@ class UsuarioController extends Controller
         $users = new UsuarioController();
         if($this->page!=''){
             if($this->page=='all'){
-                if($this->id_rol==1 || $this->id_rol==2){
+                if(Session::get('id_rol')== 1 || Session::get('id_rol')== 2){
                     $users = $users->get_all_users();
                 }else{
                     return redirect()->back();
@@ -258,7 +276,20 @@ class UsuarioController extends Controller
             }else if($this->page=='facturar'){
                 $users = $users->get_pendientes_facturacion(); 
             }else if($this->page=='facturacion_pendiente_pago'){
-                $users = $users->facturacion_pendiente_pago(); 
+                $users = $users->facturacion_pendiente_pago();
+            }else if($this->page=='matriculados'){
+                $users = $users->matriculados();
+            }else if($this->page=='profile'){
+                $tipos_documentos = new TipoDocumentoController();
+                $tipos_documentos = $tipos_documentos->index();
+                return view('auth.profile',compact('tipos_documentos'));
+            }else if($this->page=='permisos'){
+                $rols = $this->get_rols();
+                $brokers = $this->get_brokers();
+                $users_rols = $this->get_user_rols();
+
+                //dd($users_rols);
+                return view('app.permiso.index',compact('rols','brokers','users_rols'));
             }
         }
         
@@ -358,7 +389,6 @@ class UsuarioController extends Controller
     public function edit($id)
     {
 
-
         $app = new AppController();
         $id = $app->decode64($id);
 
@@ -403,6 +433,12 @@ class UsuarioController extends Controller
                 $facturasCont = new FacturaController();
                 $facturas = $facturasCont->get_facturas_user($id);
                return view('app.asignacion.detalles',compact('user','tipos_documentos','users','estados','detalles','facturas'));
+            }else if($this->page=='matriculados'){
+                //dd($users);
+                $matricula = Matricula::where('id_user','=',$user->id_user)->where('estado','=',1)->select('*')->get()->last();
+               // dd($);
+
+                return view('app.asignacion.detalles',compact('user','tipos_documentos','users','estados','detalles','matricula'));
             }
         }
 
@@ -412,18 +448,57 @@ class UsuarioController extends Controller
 
     public function update(Request $request, $id)
     {
-        //dd($request->all());
-            $usuario = User::find($id);
-            $usuario->id_tipo_documento = $request->id_tipo_documento;
-            $usuario->nombres = $request->nombres;
-            $usuario->apellidos = $request->apellidos;
-            $usuario->documento = $request->documento;
-            $usuario->direccion = $request->direccion;
-            $usuario->telefono = $request->telefono;
-            $usuario->email = $request->email;
-            $usuario->fecha_nacimiento = $request->fecha_nacimiento;
-            $usuario->save();
-            //dd($usuario);
+
+           
+
+            if($request->page=='permisos'){//via ajax
+
+                if($request->estado==1){
+                    $sql = TypeUser::where('id_user','=',$request->id_rol)->where('id_rol','=',$request->id_rol)->select('*')->get();
+                    if(count($sql)==0){
+                         $user_type = new TypeUser();
+                        $user_type->id_user = $request->id_user;
+                        $user_type->id_rol = $request->id_rol;
+                        $user_type->save();
+                    }
+                }else if($request->estado==2){
+
+                        $sql = TypeUser::where('id_user','=',$request->id_user)->where('id_rol','=',$request->id_rol)->select('*')->get()->last();
+                       
+                        if($sql){
+                            $user_type = TypeUser::find($sql->id);
+                            $user_type->delete();
+                        }
+                }
+
+                return 'success';
+            }else if($request->page=='bloqueo'){
+                $user = User::find($request->id_user);
+                $user->estado = $request->estado;
+                $user->save();
+                return 'success';
+            }else{
+                 $usuario = User::find($id);
+                $usuario->id_tipo_documento = $request->id_tipo_documento;
+                $usuario->nombres = $request->nombres;
+                $usuario->apellidos = $request->apellidos;
+                $usuario->documento = $request->documento;
+                $usuario->direccion = $request->direccion;
+                $usuario->telefono = $request->telefono;
+                $usuario->email = $request->email;
+                $usuario->fecha_nacimiento = $request->fecha_nacimiento;
+                $usuario->save();
+                
+
+                if($request->page){
+                    $page = $request->page;
+                    if($page=='matriculados'){
+                        $matricula = Matricula::find($request->id_matricula);
+                        $matricula->id_broker = $request->id_broker;
+                        $matricula->save();
+                    }
+                }
+            }
 
 
 

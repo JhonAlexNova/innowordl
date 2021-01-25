@@ -105,8 +105,12 @@
         ***********************************-->
         <div class="deznav">
             <div class="deznav-scroll">
-                @if(Session::get('id_rol') == 2 || Session::get('id_rol') == 3)
+
+               
                     <ul class="metismenu" id="menu">
+                        <li><a class="has-link" href="{{url('/app')}}"> <i class="flaticon-381-networking"></i>Panel</a></li>
+                     @if(Session::get('id_rol') == 2 || Session::get('id_rol') == 3)
+                        
                         <li>
                             <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                                 <i class="fa fa-users"></i>
@@ -126,7 +130,7 @@
                         <li><a class="has-link" href="{{url('/app/usuarios?page=tareas_vencidas&type=list')}}"> <i class="flaticon-381-networking"></i>TAREAS VENCIDAS</a></li>
                         <li><a class="has-link" href="{{url('/app/usuarios?page=facturar&type=list')}}"> <i class="flaticon-381-networking"></i>FACTURAR</a></li>
                         <li><a class="has-link" href="{{url('/app/usuarios?page=facturacion_pendiente_pago&type=list')}}"> <i class="flaticon-381-networking"></i>PENDIENTES POR PAGO</a></li>
-                        <li><a class="has-link" href="{{url('/app/usuarios?page=facturacion_pendiente_pago&type=list')}}"> <i class="flaticon-381-networking"></i>MATRICULADOS</a></li>
+                        <li><a class="has-link" href="{{url('/app/usuarios?page=matriculados&type=list')}}"> <i class="flaticon-381-networking"></i>MATRICULADOS</a></li>
 
                         
                         <li class="mm-active" style="display: none;">
@@ -140,10 +144,10 @@
                                 <li><a href="{{url('/app/usuarios/importar')}}">Importar</a></li>
                             </ul>
                         </li>
-
+                        @endif
                     </ul>
 
-                @endif
+                
 
                 <div class="copyright">
                     <p><strong>Configuración</strong> </p>
@@ -152,9 +156,9 @@
 
                 <ul class="metismenu" id="submenu" style="margin-top: -40px">
                     @if(Session::get('id_rol')==2)
-                         <li><a class="has-link" href="{{url('/app/usuarios?page=tareas_dia&type=list')}}"> <i class="flaticon-381-networking"></i>Permisos</a></li>
+                         <li><a class="has-link" href="{{url('/app/usuarios?page=permisos')}}"> <i class="flaticon-381-networking"></i>Permisos</a></li>
                     @endif
-                    <li><a class="has-link" href="{{url('/app/usuarios?page=tareas_dia&type=list')}}"> <i class="flaticon-381-networking"></i>Mis datos</a></li>
+                    <li><a class="has-link" href="{{url('/app/usuarios?page=profile')}}"> <i class="flaticon-381-networking"></i>Mis datos</a></li>
                 </ul>
 
 

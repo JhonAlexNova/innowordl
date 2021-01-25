@@ -99,7 +99,7 @@
 
                                                             
                             @elseif($_REQUEST['page']=='facturar')
-                                <ul class="nav nav-tabs">
+                                    <ul class="nav nav-tabs">
                                         <li class="nav-item"><a href="#factura" data-toggle="tab" class="nav-link show active">Facturas</a></li>
                                         <li class="nav-item"><a href="#profile" data-toggle="tab" class="nav-link">Datos</a></li>
                                         <li class="nav-item"><a href="#detalles" data-toggle="tab" class="nav-link">Historial de cambios</a></li>
@@ -113,6 +113,15 @@
                                         </div>
                                         <div id="detalles" class="tab-pane fade">
                                             @include('app.asignacion.forms.historial')
+                                        </div>
+                                    </div>
+                            @elseif($_REQUEST['page']=='matriculados')
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item"><a href="#profile" data-toggle="tab" class="nav-link show active">Datos</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div id="profile" class="tab-pane fade show active">
+                                           @include('app.asignacion.forms.datos')  
                                         </div>
                                     </div>
                             @endif
@@ -147,6 +156,6 @@
     var url = new URL(url_string);
     var paramValue = url.searchParams.get("page");
     var id_det_asig = url.searchParams.get("id_det_asig");
-    
+
 </script>
 @endsection

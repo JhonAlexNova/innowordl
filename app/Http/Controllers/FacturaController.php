@@ -9,6 +9,7 @@ use DB;
 use Auth;
 use App\DetallesFactura;
 use App\DetallesAsignacion;
+use App\Matricula;
 use PDF;
 use Mail;
 
@@ -134,7 +135,7 @@ class FacturaController extends Controller
 
         $FacturaController = new FacturaController();
         $factura = $FacturaController->get_detalles_factura_id($id);
-
+        //dd();
         $empresa = new EmpresaController();
         $empresa = $empresa->get_empresa();
        // dd($empresa);
@@ -144,7 +145,6 @@ class FacturaController extends Controller
             $pdf = PDF::loadView('pdf.factura', compact('factura','empresa'));  
 
             return $pdf->download('medium.pdf');
-            dd('aca');
         }elseif ($page=='enviar_mail') {
             Mail::send('pdf.factura', compact('factura','empresa'), function ($message){
                 $message->subject('Factura');
@@ -159,16 +159,25 @@ class FacturaController extends Controller
             $detalles_f = new DetallesAsignacion();
             $detalles_f->id_estado = 6;
             $detalles_f->id_user = $_REQUEST['id_user'];
-            $detalles_f->id_broker = Auth::user()->id;
+            $detalles_f->id_broker = $factura[0]->id_broker;
             $detalles_f->fecha = $_REQUEST['fecha'];
             $detalles_f->hora = $_REQUEST['hora'];
             $detalles_f->hora_registro = $hora;
             $detalles_f->observacion = $_REQUEST['observacion'];
             $detalles_f->save();
 
+            //matricula usuario
             $factura = Factura::find($id);
             $factura->estado = 'pagada';
             $factura->save();
+
+            //
+            $matricula = new Matricula();
+            $matricula->id_user = $factura->id_user;
+            $matricula->id_broker = $factura->id_broker;
+            $matricula->estado = 1;
+            $matricula->hora_registro = $hora;
+            $matricula->save();
         }
 
        return redirect()->back();
