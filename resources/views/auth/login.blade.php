@@ -4,6 +4,7 @@
 <section id="login">
     <div class="container">
         <form method="POST" action="{{ route('login') }}">
+            <img src="https://www.innovationlanguageschool.com/wp-content/uploads/2021/01/logo_color.png" style="width: 100%">
             @csrf
             <div class="form-group">
                 <div class="logo">

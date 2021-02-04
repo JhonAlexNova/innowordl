@@ -90,7 +90,7 @@ class UsuarioController extends Controller
         ->join('rol as r','r.id','=','tu.id_rol')
         ->where('tu.id_rol','!=','6')
         ->where('tu.id_rol','!=','1')
-        ->select('*','u.id as id_','r.tipo as rol','u.created_at as fecha_registro','u.hora as hora_reg')->groupBy('u.id')->orderBy('U.id','DESC')->get();
+        ->select('*','u.id as id_','r.tipo as rol','u.created_at as fecha_registro','u.hora as hora_reg')->groupBy('u.id')->orderBy('u.id','DESC')->get();
 //        dd($users);
 
         return $users;

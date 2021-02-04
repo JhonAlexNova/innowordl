@@ -144,7 +144,7 @@ class FacturaController extends Controller
         if($page=='generar_factura_pdf'){
             $pdf = PDF::loadView('pdf.factura', compact('factura','empresa'));  
 
-            return $pdf->download('medium.pdf');
+            return $pdf->download('factura.pdf');
         }elseif ($page=='enviar_mail') {
             Mail::send('pdf.factura', compact('factura','empresa'), function ($message){
                 $message->subject('Factura');

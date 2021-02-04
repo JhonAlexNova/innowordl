@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>CONYEATS - @yield('title','Dashboard')</title>
+    <title>INNOWORDL - @yield('title','Dashboard')</title>
 
     <!-- Styles -->
     <link href="{{ asset('template/vendor/jqvmap/css/jqvmap.min.css')}}" rel="stylesheet">

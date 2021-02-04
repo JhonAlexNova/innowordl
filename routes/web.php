@@ -10,13 +10,20 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/config-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('config:cache');
+    return 'DONE'; //Return anything
+});
+
+
 Route::get('/',function(){
-	return redirect('login');
+    return redirect('login');
 });
 Route::view('/inactivo','auth.inactivo');
 
 Route::get('/pdf',function(){
-	return view('pdf.factura');
+    return view('pdf.factura');
 });
 Auth::routes();
 
@@ -33,15 +40,3 @@ Route::group(['prefix'=>'app', 'middleware'=>['auth','status']],function(){
 
 
 
-
-/*===========================================*/
-//Clear Route cache:
-Route::get('/route-clear', function() {
-    return '<h1>Route cache cleared</h1>';
-});
-Route::get('/view-clear', function() { 
-    return '<h1>View cache cleared</h1>';
-});
-Route::get('/config-cache', function() {
-    return '<h1>Clear Config cleared</h1>';
-});

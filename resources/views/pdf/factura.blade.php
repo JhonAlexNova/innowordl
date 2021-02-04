@@ -89,9 +89,7 @@
 			}
 		</style>
 	@endif
-	<div class="top">
-		<img src="https://www.innovationlanguageschool.com/wp-content/uploads/2021/01/cabecera1.png">
-	</div>
+	
 	<div class="contenido">
 		<div class="factura">
 			<div class="cabecera">
