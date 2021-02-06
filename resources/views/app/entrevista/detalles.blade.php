@@ -5,7 +5,7 @@
     <div class="page-titles">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="javascript:void(0)">Inicio</a></li>
-            <li class="breadcrumb-item active"><a href="javascript:void(0)">Detalles asignación</a></li>
+            <li class="breadcrumb-item active"><a href="javascript:void(0)">Detalles entrevista</a></li>
         </ol>
     </div>
 </div>
@@ -80,7 +80,7 @@
                             @if($_REQUEST['page']=='nuevos_clientes' || $_REQUEST['page']=='all' || $_REQUEST['page']=='tareas_dia' || $_REQUEST['page']=='tareas_vencidas')
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item"><a href="#profile" data-toggle="tab" class="nav-link show active">Datos</a></li>
-                                        <li class="nav-item"><a href="#estado" data-toggle="tab" class="nav-link">Estado</a></li>
+                                        <li class="nav-item"><a href="#entrevista" data-toggle="tab" class="nav-link">Entrevista</a></li>
                                          <li class="nav-item"><a href="#detalles" data-toggle="tab" class="nav-link">Historial de cambios</a></li>
                                     </ul>
                                     <div class="tab-content">
@@ -88,8 +88,8 @@
                                         <div id="profile" class="tab-pane fade show active">
                                             @include('app.asignacion.forms.datos')  
                                         </div>
-                                        <div id="estado" class="tab-pane fade">
-                                            @include('app.asignacion.forms.estado')
+                                        <div id="entrevista" class="tab-pane fade">
+                                            @include('app.entrevista.forms.entrevista')
                                         </div>
                                         <div id="detalles" class="tab-pane fade">
                                             @include('app.asignacion.forms.historial')
@@ -127,23 +127,6 @@
                                         </div>
                                         <div id="estado" class="tab-pane fade show fade">
                                             @include('app.asignacion.forms.estado')  
-                                        </div>
-                                        <div id="historial" class="tab-pane fade show fade">
-                                            @include('app.asignacion.forms.historial')  
-                                        </div>
-                                    </div>
-                            @elseif($_REQUEST['page']=='entrevistas')
-                                    <ul class="nav nav-tabs">
-                                        <li class="nav-item"><a href="#profile" data-toggle="tab" class="nav-link show active">Datos</a></li>
-                                        <li class="nav-item"><a href="#entrevista" data-toggle="tab" class="nav-link show active">Entrevistas</a></li>
-                                        <li class="nav-item"><a href="#historial" data-toggle="tab" class="nav-link show active">Historial</a></li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div id="profile" class="tab-pane fade show active">
-                                           @include('app.asignacion.forms.datos')  
-                                        </div>
-                                        <div id="entrevista" class="tab-pane fade show fade">
-                                            @include('app.entrevista.forms.entrevista')  
                                         </div>
                                         <div id="historial" class="tab-pane fade show fade">
                                             @include('app.asignacion.forms.historial')  
