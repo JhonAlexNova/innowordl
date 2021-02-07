@@ -60,10 +60,15 @@
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left">
                             <div class="dashboard_bar">
-                                <div class="rols">
-                                    <select>
+                                <div class="rols"> 
+                                    <select name="rol_select_active">
                                         @foreach(Session::get('rols') as $rol)
-                                           <option value=""> {{$rol->tipo}} </option>
+                                            @if(Session::get('id_rol') == $rol->id_rol)
+                                                <option value="{{ $rol->id_rol }}" selected> {{$rol->tipo}} </option>
+                                            @else
+                                                <option value="{{ $rol->id_rol }}"> {{$rol->tipo}} </option>
+                                            @endif
+                                           
                                         @endforeach
                                     </select>
                                 </div>
@@ -144,6 +149,10 @@
                                 <li><a href="{{url('/app/usuarios/importar')}}">Importar</a></li>
                             </ul>
                         </li>
+
+                        @elseif(Session::get('id_rol') == 4)
+
+
                         @endif
                     </ul>
 
@@ -302,6 +311,12 @@
             }, 1000); 
             $('#example2').DataTable();
            
+        });
+
+        $(document).on('change','select[name=rol_select_active]',function(e){
+            var id_rol = e.target.value;
+            var new_session =  "{{ url('app/rol') }}?id_rol="+id_rol;
+            location.href = new_session;
         });
 
     </script>

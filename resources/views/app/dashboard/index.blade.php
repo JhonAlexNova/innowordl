@@ -21,7 +21,7 @@
         <ul class="menu">
             @foreach(Session::get('rols') as $rol)
                      <li >
-                        <a href=""> {{$rol->tipo}} </a>
+                        <a href="{{ url('app/rol') }}?id_rol={{ $rol->id_rol }}"> {{$rol->tipo}} </a>
                     </li>
             @endforeach
         </ul>   

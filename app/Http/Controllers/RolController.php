@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Session;
 
 class RolController extends Controller
 {
@@ -13,7 +14,11 @@ class RolController extends Controller
      */
     public function index()
     {
-        //
+        if(!empty($_REQUEST['id_rol'])){
+            Session::put('id_rol',$_REQUEST['id_rol']);
+        }
+
+        return redirect('/app');
     }
 
     /**

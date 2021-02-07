@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Nivel;
 
 class NivelController extends Controller
 {
@@ -13,7 +14,12 @@ class NivelController extends Controller
      */
     public function index()
     {
-        //
+        
+    }
+
+    public function get_niveles(){
+        $niveles = Nivel::get();
+        return $niveles;
     }
 
     /**
