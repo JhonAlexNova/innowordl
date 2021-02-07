@@ -136,7 +136,7 @@
                         <li><a class="has-link" href="{{url('/app/usuarios?page=facturar&type=list')}}"> <i class="flaticon-381-networking"></i>FACTURAR</a></li>
                         <li><a class="has-link" href="{{url('/app/usuarios?page=facturacion_pendiente_pago&type=list')}}"> <i class="flaticon-381-networking"></i>PENDIENTES POR PAGO</a></li>
                         <li><a class="has-link" href="{{url('/app/usuarios?page=matriculados&type=list')}}"> <i class="flaticon-381-networking"></i>MATRICULADOS</a></li>
-
+                        <li><a class="has-link" href="{{url('/app/usuarios?page=entrevistas&type=list')}}"> <i class="flaticon-381-networking"></i>Entrevistas</a></li>
                         
                         <li class="mm-active" style="display: none;">
                             <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">

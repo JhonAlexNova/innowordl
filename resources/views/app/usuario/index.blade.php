@@ -19,6 +19,8 @@
 		@include('app.factura.pendientes_pago')
 	@elseif($_REQUEST['page']=='matriculados')
 		@include('app.matricula.registrado')
+		@elseif($_REQUEST['page']=='entrevistas')
+		@include('app.entrevista.index')
 	@endif
 @endif
 
