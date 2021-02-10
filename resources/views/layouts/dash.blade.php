@@ -132,7 +132,17 @@
                         <li><a class="has-link" href="{{url('/app/usuarios?page=facturacion_pendiente_pago&type=list')}}"> <i class="flaticon-381-networking"></i>PENDIENTES POR PAGO</a></li>
                         <li><a class="has-link" href="{{url('/app/usuarios?page=matriculados&type=list')}}"> <i class="flaticon-381-networking"></i>MATRICULADOS</a></li>
                         <li><a class="has-link" href="{{url('/app/usuarios?page=entrevistas&type=list')}}"> <i class="flaticon-381-networking"></i>Entrevistas</a></li>
-                        
+                        <li><a class="has-link" href="{{url('/app/usuarios?page=grupos&type=list')}}"> <i class="flaticon-381-networking"></i>Grupos</a></li>
+                        <li>
+                            <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                                <i class="fa fa-users"></i>
+                                <span class="nav-text">Estudiantes </span>
+                            </a>
+                            <ul aria-expanded="false" class="mm-collapse">
+                                <li><a href="{{url('/app/usuarios/?page=estudiantes_nuevos&type=list')}}">Nuevos</a></li>
+                                <li><a href="{{url('/app/usuarios/?page=estudiantes_activos&type=list')}}">Activos</a></li>
+                            </ul>
+                        </li>
                         <li class="mm-active" style="display: none;">
                             <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                                 <i class="flaticon-381-networking"></i>

@@ -9,6 +9,7 @@ use Auth;
 use Session;
 use App\User;
 use App\User_Nivel;
+use App\Integrantes_Grupos;
 
 class DetallesAsignacionController extends Controller
 {
@@ -35,43 +36,69 @@ class DetallesAsignacionController extends Controller
        ->where('da.id_user','=',$request->id_user)
        ->select('*','da.id as id_det_asig','u.id as id_','m.created_at as fecha_matricula','u.hora as hora_reg','da.fecha as fecha_evento','da.hora as hora_evento')->get();
 	 */
-		$detalles = new DetallesAsignacion();
-		$detalles->id_user = $request->id_user;
-		$detalles->id_broker = Auth::user()->id;
-		$detalles->id_estado = $request->id_estado;
-		$detalles->fecha = $request->fecha;
-		$detalles->hora = $hora.':'.$request->minuto;
-		$detalles->hora_registro = $hora_registro;
-		$detalles->observacion = $request->observacion;
-		$detalles->save();
+		
 	
 
         //update use
     	//dd($request->all());
-
         $user = User::find($request->id_user);
         $user->id_estado = $request->id_estado;
 		$user->save();
-		
-		if($request->id_nivel){
-			$user = DB::table('users as u')
-			->join('user_nivel as un','un.id_user','=','u.id')
-			->where('u.id','=',$request->id_user)
-			->select('*','u.id as id_','u.created_at as fecha_registro','u.hora as hora_reg')->get();
-			
-			//dd($request->id_nivel);
-			$count = 0;
-			foreach	($user as $use){
-				if($use->id_nivel == $request->id_nivel){
-					$count = $count + 1;
+		if($request->estado_etapa == "4"){
+			if($request->id_nivel){
+				$user = DB::table('users as u')
+				->join('user_nivel as un','un.id_user','=','u.id')
+				->where('u.id','=',$request->id_user)
+				->select('*','u.id as id_','u.created_at as fecha_registro','u.hora as hora_reg')->get();
+				
+				//dd($request->id_nivel);
+				$count = 0;
+				foreach	($user as $use){
+					if($use->id_nivel == $request->id_nivel){
+						$count = $count + 1;
+					}
 				}
+				if($count == 0){
+					$nivel = new User_Nivel();
+					$nivel->id_user = $request->id_user;
+					$nivel->id_nivel = $request->id_nivel;
+					$nivel->save();
+				}
+				if($request->id_grupo){
+					$integrantes = new Integrantes_Grupos();
+					$integrantes->id_estado = $request->id_estado;
+					$integrantes->id_grupo = $request->id_grupo;
+					$integrantes->id_user = $request->id_user;
+					$integrantes->id_broker = $user->id_broker;  //buscar este id
+					$integrantes->$id_nivel = $request->id_nivel;
+					$integrantes->estado = 'En proceso';
+					$integrantes->save();
+					
+				}
+				$detalles = new DetallesAsignacion();
+				$detalles->id_user = $request->id_user;
+				$detalles->id_broker = Auth::user()->id;
+				$detalles->id_estado = 18;
+				$detalles->fecha = $request->fecha;
+				$detalles->hora = $hora.':'.$request->minuto;
+				$detalles->hora_registro = $hora_registro;
+				$detalles->observacion = $request->observacion;
+				$detalles->save();	
+
+				$user = User::find($request->id_user);
+				$user->id_estado = 18;
+				$user->save();
 			}
-			if($count == 0){
-				$nivel = new User_Nivel();
-				$nivel->id_user = $request->id_user;
-				$nivel->id_nivel = $request->id_nivel;
-				$nivel->save();
-			}	
+		} else{
+			$detalles = new DetallesAsignacion();
+			$detalles->id_user = $request->id_user;
+			$detalles->id_broker = Auth::user()->id;
+			$detalles->id_estado = $request->id_estado;
+			$detalles->fecha = $request->fecha;
+			$detalles->hora = $hora.':'.$request->minuto;
+			$detalles->hora_registro = $hora_registro;
+			$detalles->observacion = $request->observacion;
+			$detalles->save();
 		}
 
 

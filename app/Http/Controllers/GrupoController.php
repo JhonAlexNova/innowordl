@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Estado;
-use App\Estado_Etapa;
-
-class EstadoController extends Controller
+use App\Nivel;
+use App\Grupo;
+use Session;
+class GrupoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,15 +17,9 @@ class EstadoController extends Controller
     {
         //
     }
-
-
-    public function get_estados(){
-        $estados = Estado::all();
-        return $estados;
-    }
-    public function get_estados_eta(){
-        $estadoset = Estado_Etapa::all();
-        return $estadoset;
+    public function get_niveles(){
+        $list_niveles = Nivel::all();
+        return $list_niveles;
     }
     /**
      * Show the form for creating a new resource.
@@ -34,7 +28,9 @@ class EstadoController extends Controller
      */
     public function create()
     {
-        //
+        $niveles = new GrupoController();
+        $niveles = $niveles->get_niveles();
+        return view('app.grupo.create',compact('niveles'));
     }
 
     /**
@@ -45,7 +41,14 @@ class EstadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $grupo = new Grupo();
+        $grupo->id_nivel = $request->input('id_nivel');
+        $grupo->nombre = $request->input('nombre');
+        $grupo->fecha_inicio = $request->input('fecha_inicio');
+        $grupo->fecha_fin = $request->input('fecha_fin');
+        $grupo->save();
+        Session::flash('success','<b>Mensaje! </b>Registro creado correctamente.');
+        return redirect()->back();
     }
 
     /**
