@@ -69,25 +69,31 @@ class DetallesAsignacionController extends Controller
 					$integrantes->id_estado = $request->id_estado;
 					$integrantes->id_grupo = $request->id_grupo;
 					$integrantes->id_user = $request->id_user;
-					$integrantes->id_broker = $user->id_broker;  //buscar este id
-					$integrantes->$id_nivel = $request->id_nivel;
+					$integrantes->id_broker = Auth::user()->id;  
+					$integrantes->id_nivel = $request->id_nivel;
 					$integrantes->estado = 'En proceso';
 					$integrantes->save();
-					
-				}
-				$detalles = new DetallesAsignacion();
-				$detalles->id_user = $request->id_user;
-				$detalles->id_broker = Auth::user()->id;
-				$detalles->id_estado = 18;
-				$detalles->fecha = $request->fecha;
-				$detalles->hora = $hora.':'.$request->minuto;
-				$detalles->hora_registro = $hora_registro;
-				$detalles->observacion = $request->observacion;
-				$detalles->save();	
 
-				$user = User::find($request->id_user);
-				$user->id_estado = 18;
-				$user->save();
+					$user = User::find($request->id_user);
+					$user->id_estado = '19';
+					$user->save();
+					
+				}else{
+					$detalles = new DetallesAsignacion();
+					$detalles->id_user = $request->id_user;
+					$detalles->id_broker = Auth::user()->id;
+					$detalles->id_estado = 18;
+					$detalles->fecha = $request->fecha;
+					$detalles->hora = $hora.':'.$request->minuto;
+					$detalles->hora_registro = $hora_registro;
+					$detalles->observacion = $request->observacion;
+					$detalles->save();	
+
+					$user = User::find($request->id_user);
+					$user->id_estado = 18;
+					$user->save();
+				}
+				
 			}
 		} else{
 			$detalles = new DetallesAsignacion();
