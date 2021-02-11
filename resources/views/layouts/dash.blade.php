@@ -136,7 +136,7 @@
                         <li>
                             <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                                 <i class="fa fa-users"></i>
-                                <span class="nav-text">Estudiantes </span>
+                                <span class="nav-text">Estudiantes</span>
                             </a>
                             <ul aria-expanded="false" class="mm-collapse">
                                 <li><a href="{{url('/app/usuarios/?page=estudiantes_nuevos&type=list')}}">Nuevos</a></li>

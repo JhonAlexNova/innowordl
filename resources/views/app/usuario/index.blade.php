@@ -25,6 +25,8 @@
 		@include('app.estudiante.nuevo')
 	@elseif($_REQUEST['page']=='estudiantes_activos')
 		@include('app.estudiante.activo')
+	@elseif($_REQUEST['page']=='detalle_nivel')
+		@include('app.nivel.index')
 	@elseif($_REQUEST['page']=='grupos')
 		@include('app.grupo.index')
 	@endif

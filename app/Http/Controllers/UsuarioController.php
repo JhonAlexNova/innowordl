@@ -294,6 +294,7 @@ class UsuarioController extends Controller
        ->where('u.id_estado','=','19')->where('da.id_estado','=','19')
        ->groupby('u.id')
        ->select('*','da.id as id_det_asig','u.id as id_','r.tipo as rol','m.created_at as fecha_matricula','u.hora as hora_reg','da.fecha as fecha_evento','da.hora as hora_evento')->get();
+       //dd($users);
        return $users;
     }
     public function grupos(){
@@ -336,7 +337,20 @@ class UsuarioController extends Controller
             }else if($this->page=='estudiantes_nuevos'){
                 $users = $users->estudiantes_nuevos();
             }else if($this->page=='estudiantes_activos'){
-                    $users = $users->estudiantes_activos();
+                $users = Nivel::all();
+            }else if($this->page=='detalle_nivel'){
+               $id_nivel = $_GET["nivel"];
+               $fecha_minn = date('Y-m-d');
+               $nivel = Nivel::findOrFail($id_nivel);
+               $list_grupos = $nivel->grupos->where('fecha_fin','>=', $fecha_minn );
+               return view('app.nivel.index',compact('list_grupos','nivel'));
+            }else if($this->page=='detalle_grupo'){
+                $id_grupo = $_GET["grupo"];
+                $grupo = Grupo::findOrFail($id_grupo);
+                $list_usuarios = $grupo->usuarios;
+                //dd($list_usuarios);
+                $nivel = $grupo->nivel;
+                return view('app.grupo.detalle',compact('list_usuarios','nivel','grupo'));
             }else if($this->page=='profile'){
                 $tipos_documentos = new TipoDocumentoController();
                 $tipos_documentos = $tipos_documentos->index();
@@ -465,7 +479,7 @@ class UsuarioController extends Controller
         ->where('u.id','=',$id)
         ->select('*','u.id as id_','r.tipo as rol','u.created_at as fecha_registro','u.hora as hora_reg')
         ->get()->last();
-       //dd($userel);
+       
         
 
         $tipos_documentos = new TipoDocumentoController();
@@ -492,14 +506,7 @@ class UsuarioController extends Controller
         //
         $niveles = Nivel::all();
         //dd($niveles);
-        $fecha_minn = date('Y-m-d');
-        //$niveles =  Nivel::with("grupos")->where(grupos.fecha_inicio > $fecha_minn)->get();
         
-        $grupos = Grupo::where('fecha_inicio', '>=', $fecha_minn)
-        ->where('id_nivel', '=', $usere->id_nivel)
-        ->select('*')->get();
-        
-
         if($this->page!=''){
             if($this->page=='all' || $this->page=='nuevos_clientes' || $this->page=='tareas_dia' || $this->page=='tareas_vencidas'){
                 return view('app.asignacion.detalles',compact('user','tipos_documentos','users','estados','detalles'));
@@ -517,6 +524,12 @@ class UsuarioController extends Controller
                 $matricula = Matricula::where('id_user','=',$user->id_user)->where('estado','=',1)->select('*')->get()->last();
                 return view('app.asignacion.detalles',compact('user','usere','tipos_documentos','users','estados','estados_eta','detalles','matricula','niveles'));
             }else if($this->page=='estudiantes_nuevos'){
+                $fecha_minn = date('Y-m-d');
+                //$niveles =  Nivel::with("grupos")->where(grupos.fecha_inicio > $fecha_minn)->get();
+                
+                $grupos = Grupo::where('fecha_inicio', '>=', $fecha_minn)
+                ->where('id_nivel', '=', $usere->id_nivel)
+                ->select('*')->get();
                 $matricula = Matricula::where('id_user','=',$user->id_user)->where('estado','=',1)->select('*')->get()->last();
                 return view('app.asignacion.detalles',compact('user','usere','tipos_documentos','users','estados','estados_eta','detalles','matricula','niveles','grupos'));
             }

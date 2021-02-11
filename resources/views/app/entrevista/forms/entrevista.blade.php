@@ -17,7 +17,6 @@
                 <input type="hidden"  name="id_estado" value="{{$user->id_estado}}">
             
             <div class="form-group col-md-3 id_dep">
-                <input type="hidden"  name="id_user" value="{{$usere->id_user}}">
                 <label>Estado</label>
                 <select name="estado_etapa"  class="form-control" id="estado">
                     <option></option>
@@ -29,25 +28,24 @@
                         @endif
                     @endforeach
 
-                    @if($usere->id_estado==0)
+                    @if($user->id_estado==0)
                         <option value="0" selected="on"> REGISTRADO Y ASIGNADO </option>                            
                     @endif
                 </select>
             </div>
             <div class="form-group col-md-3 id_nivel" id="id_nivel">
                 <label>Nivel</label>
-                {{ $usere->id_nivel }}
                 <select name="id_nivel"  class="form-control">
                     <option></option>
                     @foreach($niveles as $key => $value)
-                        @if($value->id==$usere->id_nivel)
+                        @if($value->id)
                             <option value="{{$value->id}}" selected="on"> {{$value->nombre}}   </option>
                         @else
                             <option value="{{$value->id}}"> {{$value->nombre}}  </option>
                         @endif
                     @endforeach
 
-                    @if($usere->id_estado==0)
+                    @if($user->id_estado==0)
                         <option value="0" selected="on"> REGISTRADO Y ASIGNADO </option>                            
                     @endif
                 </select>
