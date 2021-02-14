@@ -36,4 +36,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function integrantes_grupos(){
+        return $this->belongsTo(IntegrantesGrupo::class, 'id_user','id');
+    }
 }

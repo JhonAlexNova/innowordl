@@ -7,6 +7,7 @@
 						<div class="form-group col-md-6">
 							<label for="id_nivel">Nivel</label>
 							<select name="id_nivel" class="form-control" required>
+								<option></option>
 								@foreach($niveles as $nivel)
 									<option value="{{ $nivel->id }}"> {{ $nivel->nombre }} </option>
 								@endforeach

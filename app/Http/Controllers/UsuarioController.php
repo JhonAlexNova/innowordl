@@ -409,13 +409,14 @@ class UsuarioController extends Controller
         $id = $app->decode64($id);
 
 
+
         $user = DB::table('users as u')
         ->join('type_user as tu','tu.id_user','=','u.id')
         ->join('rol as r','r.id','=','tu.id_rol')
-        ->join('user_nivel as un','un.id_user','=','u.id')
+       // ->join('user_nivel as un','un.id_user','=','u.id')
         ->where('u.id','=',$id)
-        ->select('*','u.id as id_','r.tipo as rol','u.created_at as fecha_registro','u.hora as hora_reg')->get();
-        $user = $user[0];
+        ->select('*','u.id as id_','r.tipo as rol','u.created_at as fecha_registro','u.hora as hora_reg')->get()->last();
+        //dd($user);
 
 
         

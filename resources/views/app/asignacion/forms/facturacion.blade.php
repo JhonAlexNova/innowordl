@@ -282,7 +282,7 @@
 				$('#modal-id').modal('show');
 			}
 		}else{
-			toastr.success('Aun faltan datos del usuario por actualizar.','Mensaje',{ timeOut: 5000 });
+			toastr.success('Asigne una edad al usuario para poder generar la factura.','Mensaje',{ timeOut: 5000 });
 		}
 
 		

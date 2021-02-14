@@ -37,6 +37,7 @@ Route::group(['prefix'=>'app', 'middleware'=>['auth','status']],function(){
     Route::resource('/permiso','PermisoController');
     Route::resource('/rol','RolController');
     Route::resource('/grupo','GrupoController');
+    Route::resource('/cartera','CarteraController');
 });
 
 

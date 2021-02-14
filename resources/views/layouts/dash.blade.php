@@ -149,10 +149,34 @@
                                 <li><a href="{{url('/app/usuarios/importar')}}">Importar</a></li>
                             </ul>
                         </li>
+                        @endif
 
-                        @elseif(Session::get('id_rol') == 4)
+
+                        @if(Session::get('id_rol') == 4)
 
 
+                        @endif
+
+                        @if(Session::get('id_rol') == 5)
+                            <li>
+                                <a class="has-link" href="{{url('/app/cartera?page=recompra&type=list')}}"> <i class="flaticon-381-networking"></i>RECOMPRA</a>
+                            </li>
+                            <li>
+                                <a class="has-link" href="{{url('/app/cartera?page=tareas_dia&type=list')}}"> <i class="flaticon-381-networking"></i>TAREAS DEL DIA</a>
+                            </li>
+                             <li>
+                                <a class="has-link" href="{{url('/app/cartera?page=tareas_vencidas&type=list')}}"> <i class="flaticon-381-networking"></i>TAREAS VENCIADAS</a>
+                            </li>
+                             <li>
+                                <a class="has-link" href="{{url('/app/cartera?page=facturar&type=list')}}"> <i class="flaticon-381-networking"></i>FACTURAR</a>
+                            </li>
+                             <li>
+                                <a class="has-link" href="{{url('/app/cartera?page=facturacion_pendiente_pago&type=list')}}"> <i class="flaticon-381-networking"></i>PENDIENTES POR PAGO</a>
+                            </li>
+
+                             <li>
+                                <a class="has-link" href="{{url('/app/cartera?page=tareas_dia&type=list')}}"> <i class="flaticon-381-networking"></i>MATRICULADOS</a>
+                            </li>
                         @endif
                     </ul>
 

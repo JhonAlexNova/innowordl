@@ -16,8 +16,12 @@ class GrupoController extends Controller
     {
         $niveles = new NivelController();
         $niveles = $niveles->get_niveles();
+
+        $grupos = Grupo::with('niveles')->get();
         
-        return view('app.grupo.index',compact('niveles'));
+       // dd($grupos);
+        
+        return view('app.grupo.index',compact('niveles','grupos'));
     }
 
 

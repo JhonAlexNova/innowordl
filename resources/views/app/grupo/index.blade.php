@@ -23,8 +23,8 @@
                         <thead>
                             <tr>
                                 <th>N°</th>
-                                <th>Titulo</th>
-                                <th>Subtitulo</th>
+                                <th>Grupo</th>
+                                <th>Nivel</th>
                                 <th>Categoria</th>
                                 <th>Precio</th>
                                 <th>Imagen</th>
