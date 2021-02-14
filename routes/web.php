@@ -35,9 +35,13 @@ Route::group(['prefix'=>'app', 'middleware'=>['auth','status']],function(){
     Route::resource('/detalles_asignacion','DetallesAsignacionController');
     Route::resource('/factura','FacturaController');
     Route::resource('/permiso','PermisoController');
+<<<<<<< HEAD
     Route::resource('/rol','RolController');
     Route::resource('/grupo','GrupoController');
     Route::resource('/cartera','CarteraController');
+=======
+    Route::resource('/grupo','GrupoController');
+>>>>>>> ac2254a43eb1fa718df250db58511964beaa08ed
 });
 
 

@@ -149,6 +149,23 @@
                                             @include('app.asignacion.forms.historial')  
                                         </div>
                                     </div>
+                                @elseif($_REQUEST['page']=='estudiantes_nuevos')
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item"><a href="#profile" data-toggle="tab" class="nav-link show active">Datos</a></li>
+                                        <li class="nav-item"><a href="#grupo" data-toggle="tab" class="nav-link show active">Grupo</a></li>
+                                        <li class="nav-item"><a href="#historial" data-toggle="tab" class="nav-link show active">Historial</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div id="profile" class="tab-pane fade show active">
+                                           @include('app.asignacion.forms.datos')  
+                                        </div>
+                                        <div id="grupo" class="tab-pane fade show fade">
+                                            @include('app.estudiante.forms.grupo')  
+                                        </div>
+                                        <div id="historial" class="tab-pane fade show fade">
+                                            @include('app.asignacion.forms.historial')  
+                                        </div>
+                                    </div>
                             @endif
                         </div>
                     @endif

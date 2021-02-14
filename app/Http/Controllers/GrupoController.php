@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+<<<<<<< HEAD
 use App\Grupo;
 
+=======
+use App\Nivel;
+use App\Grupo;
+use Session;
+>>>>>>> ac2254a43eb1fa718df250db58511964beaa08ed
 class GrupoController extends Controller
 {
     /**
@@ -14,6 +20,7 @@ class GrupoController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
         $niveles = new NivelController();
         $niveles = $niveles->get_niveles();
 
@@ -30,6 +37,24 @@ class GrupoController extends Controller
     public function create()
     {
         //
+=======
+        //
+    }
+    public function get_niveles(){
+        $list_niveles = Nivel::all();
+        return $list_niveles;
+    }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $niveles = new GrupoController();
+        $niveles = $niveles->get_niveles();
+        return view('app.grupo.create',compact('niveles'));
+>>>>>>> ac2254a43eb1fa718df250db58511964beaa08ed
     }
 
     /**
@@ -41,6 +66,7 @@ class GrupoController extends Controller
     public function store(Request $request)
     {
         $grupo = new Grupo();
+<<<<<<< HEAD
         $grupo->nombre = $request->nombre;
         $grupo->id_nivel = $request->id_nivel;
         $grupo->fecha_inicio = $request->fecha_inicio;
@@ -48,6 +74,15 @@ class GrupoController extends Controller
         $grupo->save();
 
         return response()->json(['response'=>'Grupo creado correctamente']);
+=======
+        $grupo->id_nivel = $request->input('id_nivel');
+        $grupo->nombre = $request->input('nombre');
+        $grupo->fecha_inicio = $request->input('fecha_inicio');
+        $grupo->fecha_fin = $request->input('fecha_fin');
+        $grupo->save();
+        Session::flash('success','<b>Mensaje! </b>Registro creado correctamente.');
+        return redirect()->back();
+>>>>>>> ac2254a43eb1fa718df250db58511964beaa08ed
     }
 
     /**

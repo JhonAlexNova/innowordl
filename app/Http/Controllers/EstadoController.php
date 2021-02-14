@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Estado;
+use App\Estado_Etapa;
 
 class EstadoController extends Controller
 {
@@ -22,7 +23,10 @@ class EstadoController extends Controller
         $estados = Estado::all();
         return $estados;
     }
-
+    public function get_estados_eta(){
+        $estadoset = Estado_Etapa::all();
+        return $estadoset;
+    }
     /**
      * Show the form for creating a new resource.
      *

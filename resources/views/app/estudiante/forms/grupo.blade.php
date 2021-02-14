@@ -1,6 +1,6 @@
 <div class="pt-3">
     <div class="settings-form">
-        <h4 class="text-primary">Estado entrevista</h4>
+        <h4 class="text-primary">Estado del estudiante en inducción</h4>
         @if(Session::has('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
               {!! Session::get('success') !!}
@@ -15,8 +15,10 @@
             
                 <input type="hidden"  name="id_user" value="{{$user->id_user}}">
                 <input type="hidden"  name="id_estado" value="{{$user->id_estado}}">
+                <input type="hidden"  name="id_nivel" value="{{ $usere->id_nivel }}">
             
             <div class="form-group col-md-3 id_dep">
+                <input type="hidden"  name="id_user" value="{{$usere->id_user}}">
                 <label>Estado</label>
                 <select name="estado_etapa"  class="form-control" id="estado">
                     <option></option>
@@ -28,24 +30,42 @@
                         @endif
                     @endforeach
 
-                    @if($user->id_estado==0)
+                    @if($usere->id_estado==0)
                         <option value="0" selected="on"> REGISTRADO Y ASIGNADO </option>                            
                     @endif
                 </select>
             </div>
-            <div class="form-group col-md-3 id_nivel" id="id_nivel">
+            <div class="form-group col-md-3" id="id_nivel">
                 <label>Nivel</label>
-                <select name="id_nivel"  class="form-control">
+                <p>{{$usere->id_nivel}}</p>
+                <!--<select name="id_nivel"  class="form-control">
                     <option></option>
                     @foreach($niveles as $key => $value)
-                        @if($value->id)
+                        @if($value->id==$usere->id_nivel)
                             <option value="{{$value->id}}" selected="on"> {{$value->nombre}}   </option>
                         @else
                             <option value="{{$value->id}}"> {{$value->nombre}}  </option>
                         @endif
                     @endforeach
 
-                    @if($user->id_estado==0)
+                    @if($usere->id_estado==0)
+                        <option value="0" selected="on"> REGISTRADO Y ASIGNADO </option>                            
+                    @endif
+                </select>-->
+            </div>
+            <div class="form-group col-md-3" id="id_grupo">
+                <label>Grupo</label>
+                <select name="id_grupo"  class="form-control">
+                    <option></option>
+                    @foreach($grupos as $key => $value)
+                        @if($value->id==$usere->id_nivel)
+                            <option value="{{$value->id}}" selected="on"> {{$value->nombre}}   </option>
+                        @else
+                            <option value="{{$value->id}}"> {{$value->nombre}}  </option>
+                        @endif
+                    @endforeach
+
+                    @if($usere->id_estado==0)
                         <option value="0" selected="on"> REGISTRADO Y ASIGNADO </option>                            
                     @endif
                 </select>
@@ -106,12 +126,17 @@
 </div>
 <script>
     $(document).ready(function(){
+        
         $("#id_nivel").hide();
+        $("#id_grupo").hide();
          $('#estado').on('change', function() {
             if(this.value == 4){
                 $("#id_nivel").show();
+                $("#id_grupo").show();
             }else{
                 $("#id_nivel").hide();
+                $("#id_grupo").hide();
+               
             }
          });
     })

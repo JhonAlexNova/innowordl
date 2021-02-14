@@ -19,8 +19,16 @@
 		@include('app.factura.pendientes_pago')
 	@elseif($_REQUEST['page']=='matriculados')
 		@include('app.matricula.registrado')
-		@elseif($_REQUEST['page']=='entrevistas')
+	@elseif($_REQUEST['page']=='entrevistas')
 		@include('app.entrevista.index')
+	@elseif($_REQUEST['page']=='estudiantes_nuevos')
+		@include('app.estudiante.nuevo')
+	@elseif($_REQUEST['page']=='estudiantes_activos')
+		@include('app.estudiante.activo')
+	@elseif($_REQUEST['page']=='detalle_nivel')
+		@include('app.nivel.index')
+	@elseif($_REQUEST['page']=='grupos')
+		@include('app.grupo.index')
 	@endif
 @endif
 
